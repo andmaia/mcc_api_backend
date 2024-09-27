@@ -3,7 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{8D6B7A80-F253-4CB9-83E4-445860E79DD8}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{39AAEE08-8775-4EA3-B93D-3B091EA08226}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39AAEE08-8775-4EA3-B93D-3B091EA08226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39AAEE08-8775-4EA3-B93D-3B091EA08226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39AAEE08-8775-4EA3-B93D-3B091EA08226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39AAEE08-8775-4EA3-B93D-3B091EA08226}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
