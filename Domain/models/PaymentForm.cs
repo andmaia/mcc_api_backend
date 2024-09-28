@@ -8,18 +8,7 @@ namespace Domain.models
 {
     public class PaymentForm
     {
-        public PaymentForm(string id, decimal tax, string name, DateTime creationDate, DateTime? updatedDate, DateTime? completionDate, bool isActive, Company company)
-        {
-            Id = id;
-            Tax = tax;
-            Name = name;
-            CreationDate = creationDate;
-            UpdatedDate = updatedDate;
-            CompletionDate = completionDate;
-            IsActive = isActive;
-            Company = company;
-        }
-
+     
         public string Id { get; set; }
         public decimal Tax { get; set; }
         public string Name { get; set; }

@@ -21,7 +21,7 @@ namespace Domain.models
 
         public Company Company { get; set; }
         public string CompanyId { get; set; }
-
+        public string UserId { get; set; }
         public IEnumerable<Expense> Expenses { get; set; }
         public IEnumerable<Order> Orders { get; set; }
         public IEnumerable<Comission> Comissions { get; set; }

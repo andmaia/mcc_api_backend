@@ -14,6 +14,7 @@ namespace Domain.models
         public string Name { get; set; }
         public string CNPJ { get; set; }
 
+         public string UserId { get; set; }
         public IEnumerable<Employee> Employees { get; set; } 
         public IEnumerable<PaymentForm> PaymentForms { get; set; }
         public IEnumerable<Expense> Expenses { get; set; }

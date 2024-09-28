@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Common.Authorization
 {
-    internal class AppRoleGroup
+    public static class AppRoleGroup
     {
+        public const string AdminManagement = nameof(AdminManagement);
+        public const string EmployeeAndCommandManagement = nameof(EmployeeAndCommandManagement);
+        public const string FinancialManagement = nameof(FinancialManagement);
+        public const string Reporting = nameof(Reporting);
     }
 }
