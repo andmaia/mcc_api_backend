@@ -14,6 +14,7 @@ namespace Infrastructure
         public MappingProfiles() 
         {
             CreateMap<UserRegistrationRequest, ApplicationUser>();
+            CreateMap<ApplicationUser,UserResponse>();
         }
     }
 }

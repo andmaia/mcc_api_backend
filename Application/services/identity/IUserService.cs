@@ -11,5 +11,6 @@ namespace Application.services.identity
     public interface IUserService
     {
         Task<IResponseWrapper> RegisterUserAsync(UserRegistrationRequest request);
+        Task<IResponseWrapper> GetUserByIdAsync(string id);
     }
 }

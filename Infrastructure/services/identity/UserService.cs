@@ -3,6 +3,7 @@ using AutoMapper;
 using Common.Authorization;
 using Common.Responses.identity;
 using Common.Responses.wrappers;
+using Infrastructure.Migrations;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,27 @@ namespace Infrastructure.services.identity
             _userManager = userManager;
             _mapper = mapper;
         }
+
+        public async Task<IResponseWrapper> GetUserByIdAsync(string id)
+        {
+            try
+            {
+                var userInDb = await _userManager.FindByIdAsync(id);
+                if (userInDb is not null)
+                {
+                    var mappedUser = _mapper.Map<UserResponse>(userInDb);
+                    return await ResponseWrapper<UserResponse>.SuccessAsync(mappedUser);
+                }
+                return await ResponseWrapper.FailAsync("User does not exist.");
+            }
+            catch(DbUpdateException ex)
+            {
+                return await ResponseWrapper.FailAsync(ex.Message);
+
+            }
+         
+        }
+
         public async Task<IResponseWrapper> RegisterUserAsync(UserRegistrationRequest request)
         {
             try
