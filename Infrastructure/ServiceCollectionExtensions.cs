@@ -9,6 +9,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,8 +31,12 @@ namespace Infrastructure
 
         public static IServiceCollection AddIdentityServices(this IServiceCollection services)
         {
+            var assembly = Assembly.GetExecutingAssembly();
+
             services
-                .AddTransient<ITokenService, TokenService>();
+                .AddTransient<ITokenService, TokenService>()
+                .AddTransient<IUserService, UserService>()
+                .AddAutoMapper(assembly);
 
             return services;
         }

@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Validators.Identity;
+using Common.Responses.identity;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +18,11 @@ namespace Application
         {
             var assembly = Assembly.GetExecutingAssembly();
             return services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+           return services.AddTransient<IValidator<UserRegistrationRequest>, UserRegistrationRequestValidator>();
 
         }
     }

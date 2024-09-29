@@ -13,6 +13,7 @@ internal class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddIdentitySettings();
         builder.Services.AddIdentityServices();
+        builder.Services.AddValidators();
         builder.Services.AddApplicationServices();
         builder.Services.AddDatabase(builder.Configuration);
         builder.Services.RegisterSwagger();
