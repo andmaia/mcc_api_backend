@@ -1,4 +1,6 @@
-﻿using Infrastructure.Context;
+﻿using Application.services.identity;
+using Infrastructure.Context;
+using Infrastructure.services.identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +27,16 @@ namespace Infrastructure
                 })).AddTransient<SeederDbContext>();
             return services;
         }
+
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services)
+        {
+            services
+                .AddTransient<ITokenService, TokenService>();
+
+            return services;
+        }
+
+
 
     }
 }

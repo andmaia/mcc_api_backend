@@ -1,3 +1,4 @@
+using Application;
 using Infrastructure;
 using WebApi;
 
@@ -10,9 +11,12 @@ internal class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddDatabase(builder.Configuration);
         builder.Services.AddIdentitySettings();
-
+        builder.Services.AddIdentityServices();
+        builder.Services.AddApplicationServices();
+        builder.Services.AddDatabase(builder.Configuration);
+        builder.Services.RegisterSwagger();
+        builder.Services.AddJwtAuthentication(builder.Services.GetApplicationSettings(builder.Configuration));
         var app = builder.Build();
         app.SeedDatabase();
 
