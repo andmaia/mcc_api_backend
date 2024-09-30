@@ -38,6 +38,18 @@ namespace WebApi.Controllers.Identity
             return BadRequest(response);
         }
 
+        [MustHavePermission(AppFeature.Users, AppAction.Update)]
+        [HttpPut("/update-email")]
+        public async Task<IActionResult> UpdateEmail([FromBody] UpdateEmailRequest updateEmailRequest)
+        {
+            var response = await MediatorSender.Send(new UpdateEmailCommand { Request = updateEmailRequest });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
         [AllowAnonymous]
         [HttpPost("/finish-register")]
         public async Task<IActionResult> FinishRegisterUser([FromBody] UserRegistrationRequest userRegistrationRequest)

@@ -21,5 +21,7 @@ namespace Application.services.identity
 
         Task<IResponseWrapper> GetUserByEmailAsync(string email);
 
+        Task<IResponseWrapper> UpdateEmailUserAsync(UpdateEmailRequest request);
+
     }
 }

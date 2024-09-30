@@ -23,8 +23,9 @@ namespace Application
 
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
-           return services.AddTransient<IValidator<UserRegistrationRequest>, UserRegistrationRequestValidator>().
-             AddTransient<IValidator<UserPreRegistrationRequest>, PreUserRegistrationValidator>();
+            return services.AddTransient<IValidator<UserRegistrationRequest>, UserRegistrationRequestValidator>()
+              .AddTransient<IValidator<UserPreRegistrationRequest>, PreUserRegistrationValidator>()
+              .AddTransient<IValidator<UpdateEmailRequest>, UpdateEmailRequestValidator>();
 
 
         }

@@ -188,5 +188,36 @@ namespace Infrastructure.services.identity
             }
         }
 
+        public async Task<IResponseWrapper> UpdateEmailUserAsync(UpdateEmailRequest request)
+        {
+            var userToUpdate = await _userManager.Users.FirstOrDefaultAsync(u => u.Id==request.Id);
+            if ( userToUpdate is null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. User does'nt exists.");
+            }
+
+            if (userToUpdate.Email != request.OldEmail)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. oldEmail is not equal email user.");
+            }
+            var userWithEmailAlreadyRegistred = await _userManager.FindByEmailAsync(request.NewEmail);
+
+            if (userWithEmailAlreadyRegistred is not null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. NewEmail already has a user.");
+            }
+
+            userToUpdate.Email = request.NewEmail;
+            
+            var result =await _userManager.UpdateAsync(userToUpdate);
+
+            if (result.Succeeded)
+            {
+                return await ResponseWrapper.SuccessAsync();
+            }
+
+            return await ResponseWrapper.FailAsync("Fail to update user.");
+
+        }
     }
 }

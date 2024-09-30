@@ -249,6 +249,97 @@ namespace Test.Services.Authentication
             result.IsSuccessful.Should().BeFalse();
             result.Messages.Should().Contain("User does not exist.");
         }
+        [Fact]
+        public async Task UpdateEmailUserAsync_Should_Return_Fail_If_User_Does_Not_Exist()
+        {
+            var updateEmailRequest = new UpdateEmailRequestBuilder().Build();
+
+            var users = new List<ApplicationUser>();
+            var mockUsers = users.AsQueryable().BuildMock();
+            _userManagerMock.Setup(um => um.Users).Returns(mockUsers);
+
+            var result = await _userService.UpdateEmailUserAsync(updateEmailRequest);
+
+            result.IsSuccessful.Should().BeFalse();
+            result.Messages.Should().Contain("Fail to update user. User does'nt exists.");
+
+        }
+
+        [Fact]
+        public async Task UpdateEmailUserAsync_Should_Return_Fail_If_oldEmail_Does_Not_Exist()
+        {
+            var userMock = new ApplicationUserBuilder().WithEmail("default2@gmail.com").Build();
+            var updateEmailRequest = new UpdateEmailRequestBuilder().WithId(userMock.Id).WithOldEmail("default1@gmail.com").Build();
+            var users = new List<ApplicationUser>() {userMock};
+            var mockUsers = users.AsQueryable().BuildMock();
+
+            _userManagerMock.Setup(um => um.Users).Returns(mockUsers);
+
+            var result = await _userService.UpdateEmailUserAsync(updateEmailRequest);
+
+            result.IsSuccessful.Should().BeFalse();
+            result.Messages.Should().Contain("Fail to update user. oldEmail is not equal email user.");
+
+        }
+
+        [Fact]
+        public async Task UpdateEmailUserAsync_Should_Return_Fail_If_newEmail_Exist()
+        {
+            var userMock = new ApplicationUserBuilder().WithEmail("default@gmail.com").Build();
+            var userMockWithEmailRegistred = new ApplicationUserBuilder().WithEmail("defaultRegistred@gmail.com").Build();
+            var updateEmailRequest = new UpdateEmailRequestBuilder().WithId(userMock.Id).WithOldEmail(userMock.Email).WithNewEmail(userMockWithEmailRegistred.Email).Build();
+            var users = new List<ApplicationUser>() { userMock };
+            var mockUsers = users.AsQueryable().BuildMock();
+
+            _userManagerMock.Setup(um => um.Users).Returns(mockUsers);
+            _userManagerMock.Setup(um => um.FindByEmailAsync(updateEmailRequest.NewEmail)).ReturnsAsync(userMockWithEmailRegistred);
+
+            var result = await _userService.UpdateEmailUserAsync(updateEmailRequest);
+
+            result.IsSuccessful.Should().BeFalse();
+            result.Messages.Should().Contain("Fail to update user. NewEmail already has a user.");
+
+        }
+
+        [Fact]
+        public async Task UpdateEmailUserAsync_Should_Return_Sucess_If_email_updated()
+        {
+            var identityResult = IdentityResult.Success;
+            var userMock = new ApplicationUserBuilder().WithEmail("default@gmail.com").Build();
+            var updateEmailRequest = new UpdateEmailRequestBuilder().WithId(userMock.Id).WithOldEmail(userMock.Email).Build();
+            var users = new List<ApplicationUser>() {userMock };
+            var mockUsers = users.AsQueryable().BuildMock();
+
+            _userManagerMock.Setup(um => um.Users).Returns(mockUsers);
+            _userManagerMock.Setup(um => um.FindByEmailAsync(updateEmailRequest.NewEmail)).ReturnsAsync((ApplicationUser)null);
+            _userManagerMock.Setup(um => um.UpdateAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(identityResult);
+
+            var result = await _userService.UpdateEmailUserAsync(updateEmailRequest);
+
+            result.IsSuccessful.Should().BeTrue();
+
+        }
+
+        [Fact]
+        public async Task UpdateEmailUserAsync_Should_Return_fail_If_email_not_updated()
+        {
+            var identityResult = new IdentityResult();
+            var userMock = new ApplicationUserBuilder().WithEmail("default@gmail.com").Build();
+            var updateEmailRequest = new UpdateEmailRequestBuilder().WithId(userMock.Id).WithOldEmail(userMock.Email).Build();
+            var users = new List<ApplicationUser>() { userMock };
+            var mockUsers = users.AsQueryable().BuildMock();
+
+            _userManagerMock.Setup(um => um.Users).Returns(mockUsers);
+            _userManagerMock.Setup(um => um.FindByEmailAsync(updateEmailRequest.NewEmail)).ReturnsAsync((ApplicationUser)null);
+            _userManagerMock.Setup(um => um.UpdateAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(identityResult);
+
+            var result = await _userService.UpdateEmailUserAsync(updateEmailRequest);
+
+            result.IsSuccessful.Should().BeFalse();
+            result.Messages.Should().Contain("Fail to update user.");
+
+
+        }
 
 
     }
