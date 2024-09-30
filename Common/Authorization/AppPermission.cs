@@ -25,7 +25,7 @@ namespace Common.Authorization
         {
             new(AppFeature.Users, AppAction.Create, AppRoleGroup.AdminManagement, "Create Users", new[] { AppRole.Admin }),
             new(AppFeature.Users, AppAction.Update, AppRoleGroup.AdminManagement, "Update Users", new[] { AppRole.Admin }),
-            new(AppFeature.Users, AppAction.Read, AppRoleGroup.AdminManagement, "Read Users", new[] { AppRole.Admin, AppRole.Manager }),
+            new(AppFeature.Users, AppAction.Read, AppRoleGroup.AdminManagement, "Read Users", new[] { AppRole.Admin, AppRole.Manager,AppRole.Basic }),
             new(AppFeature.Users, AppAction.Delete, AppRoleGroup.AdminManagement, "Delete Users", new[] { AppRole.Admin }),
             new(AppFeature.Employees, AppAction.Create, AppRoleGroup.EmployeeAndCommandManagement, "Create Employees", new[] { AppRole.Admin }),
             new(AppFeature.Employees, AppAction.Update, AppRoleGroup.EmployeeAndCommandManagement, "Update Employees", new[] { AppRole.Admin }),

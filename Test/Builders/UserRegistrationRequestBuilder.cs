@@ -20,8 +20,7 @@ namespace Test.Builders
                 Password = "defaultPassword123",
                 ComfirmPassword = "defaultPassword123",
                 PhoneNumber = "1234567890",
-                ActivateUser = true,
-                AutoComfirmEmail = false
+       
             };
         }
 
@@ -55,18 +54,7 @@ namespace Test.Builders
             return this;
         }
 
-        public UserRegistrationRequestBuilder WithActivateUser(bool activateUser)
-        {
-            _request.ActivateUser = activateUser;
-            return this;
-        }
-
-        public UserRegistrationRequestBuilder WithAutoConfirmEmail(bool autoConfirmEmail)
-        {
-            _request.AutoComfirmEmail = autoConfirmEmail;
-            return this;
-        }
-
+    
         public UserRegistrationRequest Build()
         {
             return _request;

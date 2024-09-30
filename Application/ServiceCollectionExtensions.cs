@@ -1,4 +1,5 @@
 ﻿using Application.Validators.Identity;
+using Common.requests.identity;
 using Common.Responses.identity;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,9 @@ namespace Application
 
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
-           return services.AddTransient<IValidator<UserRegistrationRequest>, UserRegistrationRequestValidator>();
+           return services.AddTransient<IValidator<UserRegistrationRequest>, UserRegistrationRequestValidator>().
+             AddTransient<IValidator<UserPreRegistrationRequest>, PreUserRegistrationValidator>();
+
 
         }
     }
