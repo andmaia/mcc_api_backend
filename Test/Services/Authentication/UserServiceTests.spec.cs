@@ -19,8 +19,7 @@ namespace Test.Services.Authentication
     public class UserServiceTests
     {
         private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
-        private readonly IUserService _sut;
-        private readonly UserService _userService; // Classe a ser testada
+        private readonly IUserService _userService; 
         private readonly Mock<IMapper> _mapperMock;
         public UserServiceTests()
         {
@@ -30,19 +29,17 @@ namespace Test.Services.Authentication
             _userService = new UserService(_userManagerMock.Object,_mapperMock.Object);
         }
 
+
+        
+
         [Fact]
         public async Task RegistrationUser_Should_returns_fail_If_email_already_exists()
         {
             string email = "email@gmail.com";
-            var userResponseMock = new ApplicationUser
-            {
-                Email =email
-            };
-            var userRegistrationMock = new UserRegistrationRequestBuilder()
-                .WithEmail(email).Build();
+            var userResponseMock = new ApplicationUserBuilder().WithEmail(email).Build();
+            var userRegistrationMock = new UserRegistrationRequestBuilder().WithEmail(email).Build();
 
-            _userManagerMock.Setup(um => um.FindByEmailAsync(userRegistrationMock.Email))
-                .ReturnsAsync(userResponseMock);
+            _userManagerMock.Setup(um => um.FindByEmailAsync(userRegistrationMock.Email)).ReturnsAsync(userResponseMock);
 
             var result =await _userService.RegisterUserAsync(userRegistrationMock);
 
@@ -54,12 +51,8 @@ namespace Test.Services.Authentication
         public async Task RegistrationUser_Should_returns_fail_If_username_already_exists()
         {
             string username = "userTest";
-            var userResponseMock = new ApplicationUser
-            {
-                UserName = username
-            };
-            var userRegistrationMock = new UserRegistrationRequestBuilder()
-                .WithUserName(username).Build();
+            var userResponseMock = new ApplicationUserBuilder().WithUserName(username).Build();
+            var userRegistrationMock = new UserRegistrationRequestBuilder().WithUserName(username).Build();
 
             _userManagerMock.Setup(um => um.FindByNameAsync(userRegistrationMock.UserName))
                 .ReturnsAsync(userResponseMock);
@@ -76,15 +69,10 @@ namespace Test.Services.Authentication
             var userRegistrationMock = new UserRegistrationRequestBuilder().Build();
 
             var users = new List<ApplicationUser>();
-            var expectedUser = new ApplicationUser
-            {
-                Email = userRegistrationMock.Email,
-                UserName = userRegistrationMock.UserName,
-                PhoneNumber = userRegistrationMock.PhoneNumber
-            };
+            var expectedUser = new ApplicationUserBuilder().WithEmail(userRegistrationMock.Email)
+                .WithPhoneNumber(userRegistrationMock.PhoneNumber).WithUserName(userRegistrationMock.UserName).Build();
 
-            _mapperMock.Setup(m => m.Map<ApplicationUser>(It.IsAny<UserRegistrationRequest>()))
-                        .Returns(expectedUser);
+            _mapperMock.Setup(m => m.Map<ApplicationUser>(It.IsAny<UserRegistrationRequest>())).Returns(expectedUser);
 
             var mockUsers = users.AsQueryable().BuildMock();
             var error = new DbUpdateException("Database error occurred");
@@ -103,8 +91,8 @@ namespace Test.Services.Authentication
         public async Task PreRegisterUser_Should_Return_Fail_If_Email_Already_Exists()
         {
             string email = "test@test.com";
-            var userMock = new ApplicationUser { Email = email };
-            var preRegisterRequest = new UserPreRegistrationRequest { Email = email };
+            var userMock = new ApplicationUserBuilder().WithEmail(email).Build();
+            var preRegisterRequest = new UserPreRegistrationRequestBuilder().WithEmail(email).Build();
 
             _userManagerMock.Setup(um => um.FindByEmailAsync(email)).ReturnsAsync(userMock);
 
@@ -118,8 +106,8 @@ namespace Test.Services.Authentication
         public async Task PreRegisterUser_Should_Return_Fail_If_Username_Already_Exists()
         {
             string userName = "testUser";
-            var userMock = new ApplicationUser { UserName = userName };
-            var preRegisterRequest = new UserPreRegistrationRequest { UserName = userName };
+            var userMock = new ApplicationUserBuilder().WithUserName(userName).Build();
+            var preRegisterRequest = new UserPreRegistrationRequestBuilder().WithUserName(userName).Build();
 
             _userManagerMock.Setup(um => um.FindByNameAsync(userName)).ReturnsAsync(userMock);
 
@@ -132,20 +120,18 @@ namespace Test.Services.Authentication
         [Fact]
         public async Task PreRegisterUser_Should_Return_Success_When_User_Is_Registered_Successfully()
         {
-            var preRegisterRequest = new UserPreRegistrationRequest { Email = "test@test.com", UserName = "testUser", Role = "Admin" };
-            var expecetedUser = new ApplicationUser()
-            {
-                Email = preRegisterRequest.Email,
-                UserName = preRegisterRequest.UserName,
-            };
+            var identityResult = IdentityResult.Success;
+            var preRegisterRequest = new UserPreRegistrationRequestBuilder().Build();
+            var expecetedUser = new ApplicationUserBuilder().WithUserName(preRegisterRequest.UserName)
+                .WithEmail(preRegisterRequest.Email).Build();
+
             _mapperMock.Setup(m => m.Map<ApplicationUser>(It.IsAny<UserPreRegistrationRequest>()))
                    .Returns(expecetedUser);
-            var identityResult = IdentityResult.Success;
 
             _userManagerMock.Setup(um => um.FindByEmailAsync(preRegisterRequest.Email)).ReturnsAsync((ApplicationUser)null);
             _userManagerMock.Setup(um => um.FindByNameAsync(preRegisterRequest.UserName)).ReturnsAsync((ApplicationUser)null);
             _userManagerMock.Setup(um => um.CreateAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(identityResult);
-            _userManagerMock.Setup(um => um.AddToRoleAsync(It.IsAny<ApplicationUser>(), preRegisterRequest.Role)).ReturnsAsync(IdentityResult.Success);
+            _userManagerMock.Setup(um => um.AddToRoleAsync(It.IsAny<ApplicationUser>(), preRegisterRequest.Role)).ReturnsAsync(identityResult);
 
             var result = await _userService.PreRegisterUserAsync(preRegisterRequest);
 
@@ -156,20 +142,20 @@ namespace Test.Services.Authentication
         [Fact]
         public async Task PreRegisterUser_Should_Return_Fail_If_Role_Not_Found()
         {
-            var preRegisterRequest = new UserPreRegistrationRequest { Email = "test@test.com", UserName = "testUser", Role = "InvalidRole" };
-            var expecetedUser = new ApplicationUser()
-            {
-                Email = preRegisterRequest.Email,
-                UserName = preRegisterRequest.UserName,
-            };
+
+            var identityResult = new IdentityResult();
+            var preRegisterRequest = new UserPreRegistrationRequestBuilder().Build();
+            var expecetedUser = new ApplicationUserBuilder().WithUserName(preRegisterRequest.UserName)
+                .WithEmail(preRegisterRequest.Email).Build();
+
             _mapperMock.Setup(m => m.Map<ApplicationUser>(It.IsAny<UserPreRegistrationRequest>()))
             .Returns(expecetedUser);
 
-            var identityResult = IdentityResult.Success;
 
             _userManagerMock.Setup(um => um.FindByEmailAsync(preRegisterRequest.Email)).ReturnsAsync((ApplicationUser)null);
             _userManagerMock.Setup(um => um.FindByNameAsync(preRegisterRequest.UserName)).ReturnsAsync((ApplicationUser)null);
             _userManagerMock.Setup(um => um.CreateAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(identityResult);
+            _userManagerMock.Setup(um => um.AddToRoleAsync(It.IsAny<ApplicationUser>(), preRegisterRequest.Role)).ReturnsAsync(identityResult);
 
             var result = await _userService.PreRegisterUserAsync(preRegisterRequest);
 
@@ -180,7 +166,8 @@ namespace Test.Services.Authentication
         [Fact]
         public async Task FinishRegisterUser_Should_Return_Fail_If_Email_Not_PreRegistered()
         {
-            var request = new UserRegistrationRequest { Email = "test@test.com" };
+            var request = new UserRegistrationRequestBuilder().Build();
+
             _userManagerMock.Setup(um => um.FindByEmailAsync(request.Email)).ReturnsAsync((ApplicationUser)null);
 
             var result = await _userService.FinishRegisterUserAsync(request);
@@ -195,14 +182,13 @@ namespace Test.Services.Authentication
         [Fact]
         public async Task FinishRegisterUser_Should_Return_Fail_If_CellPhone_Already_Registered()
         {
-            var request = new UserRegistrationRequest { Email = "test@test.com", PhoneNumber = "123456789",Password="@Teste123",ComfirmPassword="@Teste123"};
-            var userMock = new ApplicationUser { Email = request.Email, PhoneNumber = request.PhoneNumber,PasswordHash = request.Password };
+            var request = new UserRegistrationRequestBuilder().Build();
+            var userMock = new ApplicationUserBuilder().WithEmail(request.Email).WithPhoneNumber(request.PhoneNumber).WithPasswordHash(request.Password).Build();
+           
             var users = new List<ApplicationUser>() {userMock };
-
             var mockUsers = users.AsQueryable().BuildMock();
 
             _userManagerMock.Setup(um => um.FindByEmailAsync(request.Email)).ReturnsAsync(userMock);
-
             _userManagerMock.Setup(um => um.Users).Returns(mockUsers);
 
             var result = await _userService.FinishRegisterUserAsync(request);
@@ -215,13 +201,13 @@ namespace Test.Services.Authentication
         [Fact]
         public async Task FinishRegisterUser_Should_Return_Success_When_User_Is_Updated_Successfully()
         {
-            var request = new UserRegistrationRequest { Email = "test@test.com", PhoneNumber = "123456789", Password = "password123" };
-            var userMock = new ApplicationUser { Email = request.Email };
+            var request = new UserRegistrationRequestBuilder().Build();
+            var userMock = new ApplicationUserBuilder().WithEmail(request.Email).WithPhoneNumber(request.PhoneNumber).WithPasswordHash(request.Password).Build();
             var identityResult = IdentityResult.Success;
+
             var users = new List<ApplicationUser>();
-
-
             var mockUsers = users.AsQueryable().BuildMock();
+
             _userManagerMock.Setup(um => um.FindByEmailAsync(request.Email)).ReturnsAsync(userMock);
             _userManagerMock.Setup(um => um.Users).Returns(mockUsers);
             _userManagerMock.Setup(um => um.UpdateAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(identityResult);

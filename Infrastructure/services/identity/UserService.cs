@@ -52,7 +52,6 @@ namespace Infrastructure.services.identity
 
         public async Task<IResponseWrapper> FinishRegisterUserAsync(UserRegistrationRequest request)
         {
-            //verificar se já tem um email cadastrado associado a user
             var userPreRegisted =await _userManager.FindByEmailAsync(request.Email);
             if (userPreRegisted is not null)
             {
@@ -63,13 +62,11 @@ namespace Infrastructure.services.identity
                 {
                     return await ResponseWrapper.FailAsync("Fail to register user. CellphoneNumber already exists");
                 }
-                //atualizar o usuario retornado com senha, confirmação de senha, telefone e usename
-                //setar email confirmado
                 userPreRegisted.PhoneNumber = request.PhoneNumber;
                 userPreRegisted.PhoneNumberConfirmed = true;
                 userPreRegisted.EmailConfirmed = true;
                 userPreRegisted.IsActive = true;
-                //adionar senha com hash
+
                 var password = new PasswordHasher<ApplicationUser>();
                 userPreRegisted.PasswordHash = password.HashPassword(userPreRegisted, request.Password);
 
@@ -103,20 +100,22 @@ namespace Infrastructure.services.identity
             newUser.IsActive = false;
 
             var identityResult = await _userManager.CreateAsync(newUser);
+            if (identityResult.Succeeded)
             {
                 var role = AppRole.DefaultRoles.FirstOrDefault(r => r == request.Role);
                 if (role != null)
                 {
-                    await _userManager.AddToRoleAsync(newUser, role); 
+                    await _userManager.AddToRoleAsync(newUser, role);
                     return await ResponseWrapper<string>.SuccessAsync("User pre-registered successfully.");
                 }
                 else
                 {
-                    return await ResponseWrapper.FailAsync("Fail to pre-register user");
+                    return await ResponseWrapper.FailAsync("Fail to pre-register user.Role doesn't exists");
                 }
             }
+            return await ResponseWrapper.FailAsync("Fail to pre-register user");
 
-           
+
         }
 
         public async Task<IResponseWrapper> RegisterUserAsync(UserRegistrationRequest request)
