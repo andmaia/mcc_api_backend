@@ -25,7 +25,9 @@ namespace Application
         {
             return services.AddTransient<IValidator<UserRegistrationRequest>, UserRegistrationRequestValidator>()
               .AddTransient<IValidator<UserPreRegistrationRequest>, PreUserRegistrationValidator>()
-              .AddTransient<IValidator<UpdateEmailRequest>, UpdateEmailRequestValidator>();
+              .AddTransient<IValidator<UpdateEmailRequest>, UpdateEmailRequestValidator>()
+              .AddTransient<IValidator<UpdateCellPhoneNumberRequest>, UpdateCellPhoneNumberRequestValidator>()
+              .AddTransient<IValidator<UpdateUserNameRequest>, UpdateUserNameRequestValidator>();
 
 
         }

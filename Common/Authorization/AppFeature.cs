@@ -18,6 +18,8 @@ namespace Common.Authorization
         public const string Commissions = nameof(Commissions);
         public const string Expense = nameof(Expense);
         public const string Statistics = nameof(Statistics);
+        public const string Companies = nameof(Companies);
+
     }
 
 }

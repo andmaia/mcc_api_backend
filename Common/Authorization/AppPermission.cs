@@ -27,9 +27,13 @@ namespace Common.Authorization
             new(AppFeature.Users, AppAction.Update, AppRoleGroup.AdminManagement, "Update Users", new[] { AppRole.Admin }),
             new(AppFeature.Users, AppAction.Read, AppRoleGroup.AdminManagement, "Read Users", new[] { AppRole.Admin, AppRole.Manager,AppRole.Basic }),
             new(AppFeature.Users, AppAction.Delete, AppRoleGroup.AdminManagement, "Delete Users", new[] { AppRole.Admin }),
+            new(AppFeature.Companies, AppAction.Create, AppRoleGroup.AdminManagement, "Create Companies", new[] { AppRole.Admin }),
+            new(AppFeature.Companies, AppAction.Update, AppRoleGroup.AdminManagement, "Update Companies", new[] { AppRole.Admin }),
+            new(AppFeature.Companies, AppAction.Read, AppRoleGroup.AdminManagement, "Read Companies", new[] { AppRole.Admin}),
+            new(AppFeature.Companies, AppAction.Delete, AppRoleGroup.AdminManagement, "Delete Companies", new[] { AppRole.Admin }),
             new(AppFeature.Employees, AppAction.Create, AppRoleGroup.EmployeeAndCommandManagement, "Create Employees", new[] { AppRole.Admin }),
-            new(AppFeature.Employees, AppAction.Update, AppRoleGroup.EmployeeAndCommandManagement, "Update Employees", new[] { AppRole.Admin }),
-            new(AppFeature.Employees, AppAction.Read, AppRoleGroup.EmployeeAndCommandManagement, "Read Employees", new[] { AppRole.Admin, AppRole.Manager }),
+            new(AppFeature.Employees, AppAction.Update, AppRoleGroup.EmployeeAndCommandManagement, "Update Employees", new[] { AppRole.Admin,AppRole.Basic,AppRole.Manager }),
+            new(AppFeature.Employees, AppAction.Read, AppRoleGroup.EmployeeAndCommandManagement, "Read Employees", new[] { AppRole.Admin, AppRole.Manager,AppRole.Basic }),
             new(AppFeature.Employees, AppAction.Delete, AppRoleGroup.EmployeeAndCommandManagement, "Delete Employees", new[] { AppRole.Admin }),
             new(AppFeature.Commands, AppAction.Create, AppRoleGroup.EmployeeAndCommandManagement, "Create Commands", new[] { AppRole.Admin }),
             new(AppFeature.Commands, AppAction.Update, AppRoleGroup.EmployeeAndCommandManagement, "Update Commands", new[] { AppRole.Admin }),
@@ -39,10 +43,10 @@ namespace Common.Authorization
             new(AppFeature.PaymentMethods, AppAction.Update, AppRoleGroup.FinancialManagement, "Update Payment Methods", new[] { AppRole.Admin }),
             new(AppFeature.PaymentMethods, AppAction.Read, AppRoleGroup.FinancialManagement, "Read Payment Methods", new[] { AppRole.Admin, AppRole.Manager, AppRole.Basic }),
             new(AppFeature.PaymentMethods, AppAction.Delete, AppRoleGroup.FinancialManagement, "Delete Payment Methods", new[] { AppRole.Admin }),
-
             new(AppFeature.Commissions, AppAction.Read, AppRoleGroup.FinancialManagement, "Read Commissions", new[] { AppRole.Admin, AppRole.Manager, AppRole.Basic }),
             new(AppFeature.Commissions, AppAction.Update, AppRoleGroup.FinancialManagement, "Update Commissions", new[] { AppRole.Admin }),
-
+            new(AppFeature.Commissions, AppAction.Create, AppRoleGroup.FinancialManagement, "Create Commissions", new[] { AppRole.Admin }),
+            new(AppFeature.Commissions, AppAction.Delete, AppRoleGroup.FinancialManagement, "Delete Commissions", new[] { AppRole.Admin }),
             new(AppFeature.Statistics, AppAction.Read, AppRoleGroup.Reporting, "Read Statistics", new[] { AppRole.Admin, AppRole.Manager, AppRole.Basic })
         };
 

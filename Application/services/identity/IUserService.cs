@@ -14,6 +14,7 @@ namespace Application.services.identity
         Task<IResponseWrapper> PreRegisterUserAsync(UserPreRegistrationRequest request);
 
         Task<IResponseWrapper> FinishRegisterUserAsync(UserRegistrationRequest request);
+        Task<IResponseWrapper> UpdatePhoneNumber(UpdateCellPhoneNumberRequest request);
 
 
         Task<IResponseWrapper> RegisterUserAsync(UserRegistrationRequest request);
@@ -22,6 +23,7 @@ namespace Application.services.identity
         Task<IResponseWrapper> GetUserByEmailAsync(string email);
 
         Task<IResponseWrapper> UpdateEmailUserAsync(UpdateEmailRequest request);
+        Task<IResponseWrapper> UpdateUserNameAsync(UpdateUserNameRequest request);
 
     }
 }

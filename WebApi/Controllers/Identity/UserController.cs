@@ -50,6 +50,31 @@ namespace WebApi.Controllers.Identity
             return BadRequest(response);
         }
 
+        [MustHavePermission(AppFeature.Users, AppAction.Update)]
+        [HttpPut("/update-username")]
+        public async Task<IActionResult> UpdateUserName([FromBody] UpdateUserNameRequest updateUserNameRequest)
+        {
+            var response = await MediatorSender.Send(new UpdateUserNameCommand { UpdateUserNameRequest = updateUserNameRequest });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [MustHavePermission(AppFeature.Employees, AppAction.Update)]
+
+        [HttpPut("/update-phoneNumber")]
+        public async Task<IActionResult> UpdatePhoneNumber([FromBody] UpdateCellPhoneNumberRequest updateCellPhoneNumber)
+        {
+            var response = await MediatorSender.Send(new UpdateCellPhoneNumberCommand { UpdateCellPhoneNumberRequest = updateCellPhoneNumber });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
         [AllowAnonymous]
         [HttpPost("/finish-register")]
         public async Task<IActionResult> FinishRegisterUser([FromBody] UserRegistrationRequest userRegistrationRequest)

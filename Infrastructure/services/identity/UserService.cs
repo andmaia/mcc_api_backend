@@ -219,5 +219,67 @@ namespace Infrastructure.services.identity
             return await ResponseWrapper.FailAsync("Fail to update user.");
 
         }
+
+        public async Task<IResponseWrapper> UpdatePhoneNumber(UpdateCellPhoneNumberRequest request)
+        {
+            var userToUpdate = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == request.Id);
+            if (userToUpdate is null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. User does'nt exists.");
+            }
+
+            if (userToUpdate.PhoneNumber != request.OldPhoneNumber)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. oldPhoneNumber is not equal phone number user.");
+            }
+            var userWithPhondNumberAlreadyRegistred = await _userManager.Users.FirstOrDefaultAsync(u=>u.PhoneNumber==request.PhoneNumber);
+
+            if (userWithPhondNumberAlreadyRegistred is not null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. NewPhoneNumber already has a user.");
+            }
+
+            userToUpdate.PhoneNumber = request.PhoneNumber;
+
+            var result = await _userManager.UpdateAsync(userToUpdate);
+
+            if (result.Succeeded)
+            {
+                return await ResponseWrapper.SuccessAsync();
+            }
+
+            return await ResponseWrapper.FailAsync("Fail to update user.");
+        }
+
+        public async Task<IResponseWrapper> UpdateUserNameAsync(UpdateUserNameRequest request)
+        {
+            var userToUpdate = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == request.Id);
+            if (userToUpdate is null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. User does'nt exists.");
+            }
+
+            if (userToUpdate.UserName != request.OldUserName)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. OldUserName is not equal phone number user.");
+            }
+            var userWithUserNameAlreadyRegistred = await _userManager.FindByNameAsync(request.NewUserName);
+
+            if (userWithUserNameAlreadyRegistred is not null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. NewUserName already has a user.");
+            }
+
+            userToUpdate.UserName = request.NewUserName;
+
+            var result = await _userManager.UpdateAsync(userToUpdate);
+
+            if (result.Succeeded)
+            {
+                return await ResponseWrapper.SuccessAsync();
+            }
+
+            return await ResponseWrapper.FailAsync("Fail to update user.");
+        }
     }
 }

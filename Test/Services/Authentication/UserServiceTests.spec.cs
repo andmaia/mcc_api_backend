@@ -341,6 +341,22 @@ namespace Test.Services.Authentication
 
         }
 
+        [Fact]
+        public async Task UpdatePhoneNumbweUserAsync_Should_Return_Fail_If_User_Does_Not_Exist()
+        {
+            var updateCellPhoneNumberRequest = new UpdateCellPhoneNumberRequestBuilder().Build();
+
+            var users = new List<ApplicationUser>();
+            var mockUsers = users.AsQueryable().BuildMock();
+            _userManagerMock.Setup(um => um.Users).Returns(mockUsers);
+
+            var result = await _userService.UpdatePhoneNumber(updateCellPhoneNumberRequest);
+
+            result.IsSuccessful.Should().BeFalse();
+            result.Messages.Should().Contain("Fail to update user. User does'nt exists.");
+
+        }
+
 
     }
 }
