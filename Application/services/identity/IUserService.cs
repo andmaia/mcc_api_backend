@@ -24,6 +24,7 @@ namespace Application.services.identity
 
         Task<IResponseWrapper> UpdateEmailUserAsync(UpdateEmailRequest request);
         Task<IResponseWrapper> UpdateUserNameAsync(UpdateUserNameRequest request);
+        Task<IResponseWrapper> UpdatePasswordAsync(UpdatePasswordRequest request);
 
     }
 }

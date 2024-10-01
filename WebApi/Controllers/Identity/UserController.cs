@@ -63,11 +63,22 @@ namespace WebApi.Controllers.Identity
         }
 
         [MustHavePermission(AppFeature.Employees, AppAction.Update)]
-
         [HttpPut("/update-phoneNumber")]
         public async Task<IActionResult> UpdatePhoneNumber([FromBody] UpdateCellPhoneNumberRequest updateCellPhoneNumber)
         {
             var response = await MediatorSender.Send(new UpdateCellPhoneNumberCommand { UpdateCellPhoneNumberRequest = updateCellPhoneNumber });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [MustHavePermission(AppFeature.Employees, AppAction.Update)]
+        [HttpPut("/update-password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordRequest updatePasswordRequest)
+        {
+            var response = await MediatorSender.Send(new UpdatePasswordCommand { UpdatePasswordRequest = updatePasswordRequest });
             if (response.IsSuccessful)
             {
                 return Ok(response);

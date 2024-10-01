@@ -23,6 +23,10 @@ namespace Application.Validators.Identity
             RuleFor(request => request.NewEmail)
                 .NotEmpty().WithMessage("New email is required.")
                 .EmailAddress().WithMessage("New email must be a valid email address.");
+
+            RuleFor(x => x)
+                .Must(x => x.OldEmail != x.NewEmail)
+                .WithMessage("new email and old email must not be the same.");
         }
     }
 

@@ -18,11 +18,15 @@ namespace Application.Validators.Identity
 
             RuleFor(x => x.OldUserName)
                 .NotEmpty().WithMessage("OldUserName is required.")
-                .MaximumLength(12).WithMessage("OldUserName must be less than 12 characters.");
+                .MaximumLength(12).WithMessage("OldUserName must be less than 20 characters.");
 
             RuleFor(x => x.NewUserName)
                 .NotEmpty().WithMessage("NewUserName is required.")
-                .MaximumLength(12).WithMessage("NewUserName must be less than 12 characters.");
+                .MaximumLength(12).WithMessage("NewUserName must be less than 20 characters.");
+
+            RuleFor(x => x)
+                .Must(x => x.OldUserName != x.NewUserName)
+                .WithMessage("new username and old username must not be the same.");
         }
     }
 }

@@ -27,7 +27,8 @@ namespace Application
               .AddTransient<IValidator<UserPreRegistrationRequest>, PreUserRegistrationValidator>()
               .AddTransient<IValidator<UpdateEmailRequest>, UpdateEmailRequestValidator>()
               .AddTransient<IValidator<UpdateCellPhoneNumberRequest>, UpdateCellPhoneNumberRequestValidator>()
-              .AddTransient<IValidator<UpdateUserNameRequest>, UpdateUserNameRequestValidator>();
+              .AddTransient<IValidator<UpdateUserNameRequest>, UpdateUserNameRequestValidator>()
+              .AddTransient<IValidator<UpdatePasswordRequest>, UpdatePasswordRequestValidator>();
 
 
         }

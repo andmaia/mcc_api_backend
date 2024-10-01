@@ -261,7 +261,7 @@ namespace Infrastructure.services.identity
 
             if (userToUpdate.UserName != request.OldUserName)
             {
-                return await ResponseWrapper.FailAsync("Fail to update user. OldUserName is not equal phone number user.");
+                return await ResponseWrapper.FailAsync("Fail to update user. OldUserName is not equal UserName user.");
             }
             var userWithUserNameAlreadyRegistred = await _userManager.FindByNameAsync(request.NewUserName);
 
@@ -281,5 +281,37 @@ namespace Infrastructure.services.identity
 
             return await ResponseWrapper.FailAsync("Fail to update user.");
         }
+
+        public async Task<IResponseWrapper> UpdatePasswordAsync(UpdatePasswordRequest request)
+        {
+            var userToUpdate = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == request.Id);
+
+            if (userToUpdate is null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. User doesn't exist.");
+            }
+
+            if (userToUpdate.Email != request.Email)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. Email does not match the user email.");
+            }
+
+            var isOldPasswordCorrect = await _userManager.CheckPasswordAsync(userToUpdate, request.OldPassword);
+            if (!isOldPasswordCorrect)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update user. Old password is incorrect.");
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(userToUpdate);
+            var result = await _userManager.ResetPasswordAsync(userToUpdate, token, request.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return await ResponseWrapper.SuccessAsync();
+            }
+
+            return await ResponseWrapper.FailAsync("Fail to update user.");
+        }
+
     }
 }
