@@ -154,8 +154,9 @@ namespace Infrastructure.services.identity
                     await _userManager.AddToRoleAsync(newUser, AppRole.Admin);
                     return await ResponseWrapper<string>.SuccessAsync("User registered successfully.");
                 }
+                var errorMessages = string.Join("; ", identityResult.Errors.Select(e => e.Description));
+                return await ResponseWrapper.FailAsync("Fail to register user. Errors: " + errorMessages);
 
-                return await ResponseWrapper.FailAsync("Fail to register user");
             }
             catch (DbUpdateException ex)
             {

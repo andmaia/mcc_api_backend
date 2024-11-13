@@ -6,7 +6,6 @@ namespace Application
     {
         public MappingProfiles()
         {
-
         }
     }
 }

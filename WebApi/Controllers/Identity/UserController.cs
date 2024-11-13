@@ -101,8 +101,8 @@ namespace WebApi.Controllers.Identity
 
 
         [MustHavePermission(AppFeature.Users, AppAction.Read)]
-        [HttpGet("/{id}")]
-        public async Task<IActionResult> GetUserById(string id)
+        [HttpGet("get-user/{id}")]
+        public async Task<IActionResult> GetUserById([FromRoute ]string id)
         {
             var response = await MediatorSender.Send(new GetUserByIdQuery { Id = id });
             if (response.IsSuccessful)

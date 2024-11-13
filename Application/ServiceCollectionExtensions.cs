@@ -1,4 +1,6 @@
-﻿using Application.Validators.Identity;
+﻿using Application.Validators.Domain.Company;
+using Application.Validators.Identity;
+using Common.requests.company;
 using Common.requests.identity;
 using Common.Responses.identity;
 using FluentValidation;
@@ -28,7 +30,12 @@ namespace Application
               .AddTransient<IValidator<UpdateEmailRequest>, UpdateEmailRequestValidator>()
               .AddTransient<IValidator<UpdateCellPhoneNumberRequest>, UpdateCellPhoneNumberRequestValidator>()
               .AddTransient<IValidator<UpdateUserNameRequest>, UpdateUserNameRequestValidator>()
-              .AddTransient<IValidator<UpdatePasswordRequest>, UpdatePasswordRequestValidator>();
+              .AddTransient<IValidator<UpdatePasswordRequest>, UpdatePasswordRequestValidator>()
+                          .AddTransient<IValidator<CompanyRequest>, CompanyRequestValidator>()
+                          .AddTransient<IValidator<CompanyUpdate>, CompanyUpdateValidator>();
+
+
+
 
 
         }

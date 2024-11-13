@@ -18,7 +18,9 @@ namespace Application.Validators.Identity
 
             RuleFor(x => x.UserName)
                 .NotEmpty().WithMessage("Username is required.")
-                .MaximumLength(20).WithMessage("Username must be less than 20 characters.");
+                .MaximumLength(20).WithMessage("Username must be less than 20 characters.")
+                    .Matches("^[a-zA-Z0-9]*$").WithMessage("Username can only contain letters or digits.");
+
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required.")
