@@ -3,30 +3,31 @@ using AutoMapper;
 using Common.requests.identity;
 using Common.Responses.identity;
 using FluentAssertions;
+using Infrastructure.Context;
 using Infrastructure.Models;
 using Infrastructure.services.identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using MockQueryable;
 using Moq;
 
 using Test.Builders;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Test.Services.Authentication
 {
     public class UserServiceTests
     {
         private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
-        private readonly IUserService _userService; 
+        private readonly IUserService _userService;
         private readonly Mock<IMapper> _mapperMock;
+        private readonly Mock<ApplicationDbContext> _contextMock;
         public UserServiceTests()
         {
             var store = new Mock<IUserStore<ApplicationUser>>();
             _userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
             _mapperMock = new Mock<IMapper>();
-            _userService = new UserService(_userManagerMock.Object,_mapperMock.Object);
+            _contextMock = new Mock<ApplicationDbContext>();
+            _userService = new UserService(_userManagerMock.Object,_mapperMock.Object,_contextMock.Object);
         }
 
 

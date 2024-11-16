@@ -11,7 +11,7 @@ namespace WebApi.Controllers.Identity
 {
 
     [Route("api/[controller]")]
-    public class UserController:MyBaseController<UserController>
+    public class UserController : MyBaseController<UserController>
     {
         [AllowAnonymous]
 
@@ -26,11 +26,11 @@ namespace WebApi.Controllers.Identity
             return BadRequest(response);
         }
 
-        [MustHavePermission(AppFeature.Users,AppAction.Create)]
+        [MustHavePermission(AppFeature.Users, AppAction.Create)]
         [HttpPost("/pre-register")]
         public async Task<IActionResult> PreRegisterUser([FromBody] UserPreRegistrationRequest userPreRegistrationRequest)
         {
-            var response = await MediatorSender.Send(new PreUserRegistrationCommand {Request = userPreRegistrationRequest });
+            var response = await MediatorSender.Send(new PreUserRegistrationCommand { Request = userPreRegistrationRequest });
             if (response.IsSuccessful)
             {
                 return Ok(response);
@@ -86,11 +86,23 @@ namespace WebApi.Controllers.Identity
             return BadRequest(response);
         }
 
+        [MustHavePermission(AppFeature.Employees, AppAction.Update)]
+        [HttpPut("/update-role")]
+        public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleRequest request)
+        {
+            var response = await MediatorSender.Send(new UpdateRoleCommand { updateRoleRequest = request });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
         [AllowAnonymous]
         [HttpPost("/finish-register")]
         public async Task<IActionResult> FinishRegisterUser([FromBody] UserRegistrationRequest userRegistrationRequest)
         {
-            var response = await MediatorSender.Send(new FinishPreUserRegistrationCommand {Request = userRegistrationRequest  });
+            var response = await MediatorSender.Send(new FinishPreUserRegistrationCommand { Request = userRegistrationRequest });
             if (response.IsSuccessful)
             {
                 return Ok(response);
@@ -102,9 +114,21 @@ namespace WebApi.Controllers.Identity
 
         [MustHavePermission(AppFeature.Users, AppAction.Read)]
         [HttpGet("get-user/{id}")]
-        public async Task<IActionResult> GetUserById([FromRoute ]string id)
+        public async Task<IActionResult> GetUserById([FromRoute] string id)
         {
             var response = await MediatorSender.Send(new GetUserByIdQuery { Id = id });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [MustHavePermission(AppFeature.Users, AppAction.Read)]
+        [HttpGet("User/{email}")]
+        public async Task<IActionResult> GetUserByEmail([FromRoute] string email)
+        {
+            var response = await MediatorSender.Send(new GetUserByEmailCommand { Email = email });
             if (response.IsSuccessful)
             {
                 return Ok(response);

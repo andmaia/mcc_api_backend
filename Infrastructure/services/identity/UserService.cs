@@ -4,6 +4,7 @@ using Common.Authorization;
 using Common.requests.identity;
 using Common.Responses.identity;
 using Common.Responses.wrappers;
+using Infrastructure.Context;
 using Infrastructure.Migrations;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
@@ -20,15 +21,17 @@ namespace Infrastructure.services.identity
     {
 
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public UserService(UserManager<ApplicationUser> userManager, IMapper mapper)
+        public UserService(UserManager<ApplicationUser> userManager, IMapper mapper,ApplicationDbContext context)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _context = context;
         }
 
-  
+
         public async Task<IResponseWrapper> GetUserByIdAsync(string id)
         {
             try
@@ -312,6 +315,43 @@ namespace Infrastructure.services.identity
             }
 
             return await ResponseWrapper.FailAsync("Fail to update user.");
+        }
+
+        public async Task<IResponseWrapper> UpdateRoleFromUser(UpdateRoleRequest request)
+        {
+            var userToUpdate = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == request.IdUserToUpdate);
+
+            if (userToUpdate is null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update role user. User doesn't exist.");
+            }
+
+            var userIsFromCompany = await _context.Companies.FirstOrDefaultAsync(x => x.UserId == userToUpdate.Id);
+
+            if (userIsFromCompany is not null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to update role user. User is a company.");
+            }
+
+            var hasOldRole = await _userManager.IsInRoleAsync(userToUpdate, request.RoleOld);
+            if (!hasOldRole)
+            {
+                return await ResponseWrapper.FailAsync($"Fail to update role user. User does not have the role '{request.RoleOld}'.");
+            }
+
+            var removeRoleResult = await _userManager.RemoveFromRoleAsync(userToUpdate, request.RoleOld);
+            if (!removeRoleResult.Succeeded)
+            {
+                return await ResponseWrapper.FailAsync("Fail to remove old role. Please try again.");
+            }
+
+            var addRoleResult = await _userManager.AddToRoleAsync(userToUpdate, request.RoleNew);
+            if (!addRoleResult.Succeeded)
+            {
+                return await ResponseWrapper.FailAsync("Fail to add new role. Please try again.");
+            }
+
+            return await ResponseWrapper.SuccessAsync("Role updated successfully.");
         }
 
     }

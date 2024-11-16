@@ -13,5 +13,9 @@ namespace Application.services.Company
         Task<IResponseWrapper> GetCompanyById(string companyId);
         Task<IResponseWrapper> UpdateCompany(CompanyUpdate companyUpdate);
         Task<IResponseWrapper> CreateCompany(CompanyRequest companyRequest);
+        Task<IResponseWrapper> GetCompanyByUserId(string id);
+        Task<IResponseWrapper> GetCompanyByEmployeeUd(string id);
+
+
     }
 }

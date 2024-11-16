@@ -31,12 +31,9 @@ namespace Application
               .AddTransient<IValidator<UpdateCellPhoneNumberRequest>, UpdateCellPhoneNumberRequestValidator>()
               .AddTransient<IValidator<UpdateUserNameRequest>, UpdateUserNameRequestValidator>()
               .AddTransient<IValidator<UpdatePasswordRequest>, UpdatePasswordRequestValidator>()
-                          .AddTransient<IValidator<CompanyRequest>, CompanyRequestValidator>()
-                          .AddTransient<IValidator<CompanyUpdate>, CompanyUpdateValidator>();
-
-
-
-
+              .AddTransient<IValidator<CompanyRequest>, CompanyRequestValidator>()
+              .AddTransient<IValidator<CompanyUpdate>, CompanyUpdateValidator>()
+              .AddTransient<IValidator<UpdateRoleRequest>, UpdateRoleRequestValidator>();
 
         }
     }

@@ -40,10 +40,33 @@ namespace WebApi.Controllers.Application
         }
 
         [MustHavePermission(AppFeature.Companies, AppAction.Read)]
-        [HttpGet("get-company/{id}")]
-        public async Task<IActionResult> GetCompanyById([FromRoute]string id)
+        [HttpGet("/{id}")]
+        public async Task<IActionResult> GetCompanyById([FromRoute] string id)
         {
             var response = await MediatorSender.Send(new GetCompanyByIdCommand { Id = id });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [MustHavePermission(AppFeature.Companies, AppAction.Read)]
+        [HttpGet("/user/{id}")]
+        public async Task<IActionResult> GetCompanyByUserId([FromRoute] string id)
+        {
+            var response = await MediatorSender.Send(new GetCompanyByUserIdCommand { Id = id });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+        [MustHavePermission(AppFeature.Companies, AppAction.Read)]
+        [HttpGet("/employee/{id}")]
+        public async Task<IActionResult> GetCompanyByEmployeeId([FromRoute] string id)
+        {
+            var response = await MediatorSender.Send(new GetCompanyByEmployeeIdCommand { Id = id });
             if (response.IsSuccessful)
             {
                 return Ok(response);

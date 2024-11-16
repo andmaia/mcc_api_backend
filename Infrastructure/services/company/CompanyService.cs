@@ -55,10 +55,26 @@ namespace Infrastructure.services.company
             return await ResponseWrapper.FailAsync("Fail to create company.");
         }
 
+        public async Task<IResponseWrapper> GetCompanyByEmployeeUd(string id)
+        {
+            var company = _context.Companies
+      .FirstOrDefault(x => x.Employees.Any(e => e.Id == id));
+
+            if (company is null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to get company, because user Does't exists.");
+
+            }
+
+            var companyResponse = _mapper.Map<CompanyResponse>(company);
+
+            return await ResponseWrapper<CompanyResponse>.SuccessAsync(companyResponse);
+        }
+
         public async Task<IResponseWrapper> GetCompanyById(string companyId)
         {
-            var company = _context.Companies.FirstOrDefault(x=>x.Id == companyId);
-            if(company is null)
+            var company = _context.Companies.FirstOrDefault(x => x.Id == companyId);
+            if (company is null)
             {
                 return await ResponseWrapper.FailAsync("Fail to get company, because company Does't exists.");
 
@@ -68,6 +84,20 @@ namespace Infrastructure.services.company
 
             return await ResponseWrapper<CompanyResponse>.SuccessAsync(companyResponse);
 
+        }
+
+        public async Task<IResponseWrapper> GetCompanyByUserId(string id)
+        {
+            var company = _context.Companies.FirstOrDefault(x => x.UserId == id);
+            if (company is null)
+            {
+                return await ResponseWrapper.FailAsync("Fail to get company, because user Does't exists.");
+
+            }
+
+            var companyResponse = _mapper.Map<CompanyResponse>(company);
+
+            return await ResponseWrapper<CompanyResponse>.SuccessAsync(companyResponse);
         }
 
         public async Task<IResponseWrapper> UpdateCompany(CompanyUpdate companyUpdate)
