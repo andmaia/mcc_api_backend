@@ -1,5 +1,5 @@
 ﻿using Common.Authorization;
-using Infrastructure.Models;
+using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,10 +27,15 @@ namespace Infrastructure.Context
 
         public async Task SeedDatabaseAsync()
         {
-            await CheckAndApplyPendingMigrationAsync();
-            await SeedRolesAsync();
-            await SeedBasicUserAsync();
-            await SeedAdminUserAsync();
+            
+
+         
+            
+                await CheckAndApplyPendingMigrationAsync();
+                await SeedRolesAsync();
+                await SeedBasicUserAsync();
+                await SeedAdminUserAsync();
+            
         }
 
 

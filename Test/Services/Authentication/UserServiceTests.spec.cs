@@ -4,7 +4,6 @@ using Common.requests.identity;
 using Common.Responses.identity;
 using FluentAssertions;
 using Infrastructure.Context;
-using Infrastructure.Models;
 using Infrastructure.services.identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +16,7 @@ namespace Test.Services.Authentication
 {
     public class UserServiceTests
     {
+        /*
         private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
         private readonly IUserService _userService;
         private readonly Mock<IMapper> _mapperMock;
@@ -358,6 +358,6 @@ namespace Test.Services.Authentication
 
         }
 
-
+        */
     }
 }

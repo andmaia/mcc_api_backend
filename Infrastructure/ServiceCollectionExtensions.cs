@@ -1,7 +1,9 @@
 ﻿using Application.services.Company;
+using Application.services.Employee;
 using Application.services.identity;
 using Infrastructure.Context;
 using Infrastructure.services.company;
+using Infrastructure.services.employee;
 using Infrastructure.services.identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +41,7 @@ namespace Infrastructure
                 .AddTransient<ITokenService, TokenService>()
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<ICompanyService,CompanyService>()
+                .AddTransient<IEmployeService,EmployeeService>()
                 .AddAutoMapper(assembly);
 
             return services;

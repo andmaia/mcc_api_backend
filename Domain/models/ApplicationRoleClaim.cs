@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Models
+namespace Domain.Models
 {
-    public class ApplicationRole : IdentityRole
+    public class ApplicationRoleClaim : IdentityRoleClaim<string>
     {
         public string Description { get; set; }
+        public string Group { get; set; }
     }
 
 }

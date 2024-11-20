@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.Builders
+namespace Test.Builders.IdentityTestBuilders
 {
     public class UpdateCellPhoneNumberRequestBuilder
     {
         private string _id = Guid.NewGuid().ToString();
-        private string _phoneNumber = "11987654321";  
-        private string _oldPhoneNumber = "11912345678"; 
+        private string _phoneNumber = "11987654321";
+        private string _oldPhoneNumber = "11912345678";
 
         public UpdateCellPhoneNumberRequestBuilder WithId(string id)
         {

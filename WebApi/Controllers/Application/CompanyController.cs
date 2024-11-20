@@ -12,11 +12,11 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace WebApi.Controllers.Application
 {
-    [Route("api/[controller]")]
+    [Route("api/company/")]
     public class CompanyController : MyBaseController<CompanyController>
     {
         [MustHavePermission(AppFeature.Companies, AppAction.Create)]
-        [HttpPost("/register")]
+        [HttpPost("register-company/")]
         public async Task<IActionResult> RegisterCompany([FromBody] CompanyRequest companyRequest)
         {
             var response = await MediatorSender.Send(new CreateCompanyCommand { CompanyRequest = companyRequest });
@@ -28,7 +28,7 @@ namespace WebApi.Controllers.Application
         }
 
         [MustHavePermission(AppFeature.Companies, AppAction.Update)]
-        [HttpPut("/update")]
+        [HttpPut("update-company")]
         public async Task<IActionResult> UpdateCompany([FromBody] CompanyUpdate companyRequest)
         {
             var response = await MediatorSender.Send(new UpdateCompanyCommand { CompanyRequest = companyRequest });
@@ -40,7 +40,7 @@ namespace WebApi.Controllers.Application
         }
 
         [MustHavePermission(AppFeature.Companies, AppAction.Read)]
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCompanyById([FromRoute] string id)
         {
             var response = await MediatorSender.Send(new GetCompanyByIdCommand { Id = id });
@@ -52,7 +52,7 @@ namespace WebApi.Controllers.Application
         }
 
         [MustHavePermission(AppFeature.Companies, AppAction.Read)]
-        [HttpGet("/user/{id}")]
+        [HttpGet("user/{id}")]
         public async Task<IActionResult> GetCompanyByUserId([FromRoute] string id)
         {
             var response = await MediatorSender.Send(new GetCompanyByUserIdCommand { Id = id });
@@ -63,7 +63,7 @@ namespace WebApi.Controllers.Application
             return BadRequest(response);
         }
         [MustHavePermission(AppFeature.Companies, AppAction.Read)]
-        [HttpGet("/employee/{id}")]
+        [HttpGet("employee/{id}")]
         public async Task<IActionResult> GetCompanyByEmployeeId([FromRoute] string id)
         {
             var response = await MediatorSender.Send(new GetCompanyByEmployeeIdCommand { Id = id });

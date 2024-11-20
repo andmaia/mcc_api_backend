@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,13 +14,14 @@ namespace Domain.models
         public string Id { get; set; }
         public string Name { get; set; }
         public string CNPJ { get; set; }
-
-         public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
+        public string UserId { get; set; }
         public IEnumerable<Employee> Employees { get; set; } 
         public IEnumerable<PaymentForm> PaymentForms { get; set; }
         public IEnumerable<Expense> Expenses { get; set; }
         public IEnumerable<Order> Orders { get; set; }
         public IEnumerable<Comission> Comissions { get; set; }
+        public IEnumerable<Branch> branches { get; set; }
 
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Identity
 {
-    [Route("api/[controller]")]
+    [Route("api/token")]
     public class TokenController : MyBaseController<TokenController>
     {
         [HttpPost("get-token")]

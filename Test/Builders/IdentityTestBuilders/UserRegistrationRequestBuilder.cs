@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.Builders
+namespace Test.Builders.IdentityTestBuilders
 {
     public class UserRegistrationRequestBuilder
     {
@@ -20,7 +20,7 @@ namespace Test.Builders
                 Password = "defaultPassword123",
                 ComfirmPassword = "defaultPassword123",
                 PhoneNumber = "1234567890",
-       
+
             };
         }
 
@@ -54,7 +54,7 @@ namespace Test.Builders
             return this;
         }
 
-    
+
         public UserRegistrationRequest Build()
         {
             return _request;

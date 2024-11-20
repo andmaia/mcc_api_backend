@@ -1,6 +1,6 @@
 ﻿using Common.requests.identity;
 
-namespace Test.Builders
+namespace Test.Builders.IdentityTestBuilders
 {
     public class UserPreRegistrationRequestBuilder
     {

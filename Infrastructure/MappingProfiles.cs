@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Common.requests.company;
+using Common.requests.Employee;
 using Common.requests.identity;
 using Common.Responses.Company;
+using Common.Responses.Employee;
 using Common.Responses.identity;
 using Domain.models;
-using Infrastructure.Models;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,14 @@ namespace Infrastructure
             CreateMap<CompanyRequest, Company>();
             CreateMap<Company, CompanyResponse>();
             CreateMap<CompanyUpdate, Company>();
+            CreateMap<UpdateEmployee, Employee>();
+            CreateMap<UpdateEmployeeToCompany, Employee>();
+            CreateMap<EmployeeRegisterRequest, Employee>();
+            CreateMap<FinishRegisterEmployee, Employee>();
+            CreateMap<Employee, EmployeeResponse>();
+
+
+
         }
     }
 }

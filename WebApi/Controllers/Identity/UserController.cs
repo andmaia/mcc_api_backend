@@ -10,12 +10,12 @@ using WebApi.Attributes;
 namespace WebApi.Controllers.Identity
 {
 
-    [Route("api/[controller]")]
+    [Route("api/user/")]
     public class UserController : MyBaseController<UserController>
     {
         [AllowAnonymous]
 
-        [HttpPost("/company")]
+        [HttpPost("company")]
         public async Task<IActionResult> RegisterUserCompany([FromBody] UserRegistrationRequest userRegistration)
         {
             var response = await MediatorSender.Send(new UserRegistrationCommand { UserRegistrationRequest = userRegistration });
@@ -27,7 +27,7 @@ namespace WebApi.Controllers.Identity
         }
 
         [MustHavePermission(AppFeature.Users, AppAction.Create)]
-        [HttpPost("/pre-register")]
+        [HttpPost("pre-register")]
         public async Task<IActionResult> PreRegisterUser([FromBody] UserPreRegistrationRequest userPreRegistrationRequest)
         {
             var response = await MediatorSender.Send(new PreUserRegistrationCommand { Request = userPreRegistrationRequest });
@@ -39,7 +39,7 @@ namespace WebApi.Controllers.Identity
         }
 
         [MustHavePermission(AppFeature.Users, AppAction.Update)]
-        [HttpPut("/update-email")]
+        [HttpPut("update-email")]
         public async Task<IActionResult> UpdateEmail([FromBody] UpdateEmailRequest updateEmailRequest)
         {
             var response = await MediatorSender.Send(new UpdateEmailCommand { Request = updateEmailRequest });
@@ -51,7 +51,7 @@ namespace WebApi.Controllers.Identity
         }
 
         [MustHavePermission(AppFeature.Users, AppAction.Update)]
-        [HttpPut("/update-username")]
+        [HttpPut("update-username")]
         public async Task<IActionResult> UpdateUserName([FromBody] UpdateUserNameRequest updateUserNameRequest)
         {
             var response = await MediatorSender.Send(new UpdateUserNameCommand { UpdateUserNameRequest = updateUserNameRequest });
@@ -63,7 +63,7 @@ namespace WebApi.Controllers.Identity
         }
 
         [MustHavePermission(AppFeature.Employees, AppAction.Update)]
-        [HttpPut("/update-phoneNumber")]
+        [HttpPut("update-phoneNumber")]
         public async Task<IActionResult> UpdatePhoneNumber([FromBody] UpdateCellPhoneNumberRequest updateCellPhoneNumber)
         {
             var response = await MediatorSender.Send(new UpdateCellPhoneNumberCommand { UpdateCellPhoneNumberRequest = updateCellPhoneNumber });
@@ -75,7 +75,7 @@ namespace WebApi.Controllers.Identity
         }
 
         [MustHavePermission(AppFeature.Employees, AppAction.Update)]
-        [HttpPut("/update-password")]
+        [HttpPut("update-password")]
         public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordRequest updatePasswordRequest)
         {
             var response = await MediatorSender.Send(new UpdatePasswordCommand { UpdatePasswordRequest = updatePasswordRequest });
@@ -87,7 +87,7 @@ namespace WebApi.Controllers.Identity
         }
 
         [MustHavePermission(AppFeature.Employees, AppAction.Update)]
-        [HttpPut("/update-role")]
+        [HttpPut("update-role")]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleRequest request)
         {
             var response = await MediatorSender.Send(new UpdateRoleCommand { updateRoleRequest = request });
@@ -99,7 +99,7 @@ namespace WebApi.Controllers.Identity
         }
 
         [AllowAnonymous]
-        [HttpPost("/finish-register")]
+        [HttpPost("finish-register-user")]
         public async Task<IActionResult> FinishRegisterUser([FromBody] UserRegistrationRequest userRegistrationRequest)
         {
             var response = await MediatorSender.Send(new FinishPreUserRegistrationCommand { Request = userRegistrationRequest });

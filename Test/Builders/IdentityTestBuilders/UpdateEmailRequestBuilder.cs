@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.Builders
+namespace Test.Builders.IdentityTestBuilders
 {
     public class UpdateEmailRequestBuilder
     {

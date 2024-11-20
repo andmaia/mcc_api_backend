@@ -1,6 +1,8 @@
 ﻿using Application.Validators.Domain.Company;
+using Application.Validators.Employee;
 using Application.Validators.Identity;
 using Common.requests.company;
+using Common.requests.Employee;
 using Common.requests.identity;
 using Common.Responses.identity;
 using FluentValidation;
@@ -33,8 +35,11 @@ namespace Application
               .AddTransient<IValidator<UpdatePasswordRequest>, UpdatePasswordRequestValidator>()
               .AddTransient<IValidator<CompanyRequest>, CompanyRequestValidator>()
               .AddTransient<IValidator<CompanyUpdate>, CompanyUpdateValidator>()
-              .AddTransient<IValidator<UpdateRoleRequest>, UpdateRoleRequestValidator>();
-
+              .AddTransient<IValidator<UpdateRoleRequest>, UpdateRoleRequestValidator>()
+              .AddTransient<IValidator<UpdateEmployee>, UpdateEmployeeValidator>()
+              .AddTransient<IValidator<UpdateEmployeeToCompany>, UpdateEmployeeToCompanyValidator>()
+              .AddTransient<IValidator<EmployeeRegisterRequest>, EmployeeRegisterRequestValidator>()
+              .AddTransient<IValidator<FinishRegisterEmployee>, FinishRegisterEmployeeValidator>();
         }
     }
 

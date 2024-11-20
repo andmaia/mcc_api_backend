@@ -1,7 +1,7 @@
-﻿using Infrastructure.Models;
+﻿using Domain.Models;
 using System;
 
-namespace Test.Builders
+namespace Test.Builders.IdentityTestBuilders
 {
     public class ApplicationUserBuilder
     {

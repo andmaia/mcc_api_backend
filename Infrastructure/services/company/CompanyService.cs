@@ -43,7 +43,7 @@ namespace Infrastructure.services.company
             };
 
             var company = _mapper.Map<Company>(companyRequest);
-            company.Id = Guid.NewGuid().ToString(); 
+            company.Id = Guid.NewGuid().ToString();
             await _context.Companies.AddAsync(company);
             var result = await _context.SaveChangesAsync();
 

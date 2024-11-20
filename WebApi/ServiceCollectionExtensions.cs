@@ -1,8 +1,8 @@
 ﻿using Application.configuration;
 using Common.Authorization;
 using Common.Responses.wrappers;
+using Domain.Models;
 using Infrastructure.Context;
-using Infrastructure.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

@@ -2,7 +2,7 @@ using Application;
 using Infrastructure;
 using WebApi;
 
-internal class Program
+public partial class Program
 {
     private static void Main(string[] args)
     {
@@ -32,5 +32,10 @@ internal class Program
         app.MapControllers();
 
         app.Run();
+
     }
+
 }
+
+
+

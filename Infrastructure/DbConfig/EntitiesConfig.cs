@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.models;
-using Infrastructure.Models;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,44 +22,129 @@ namespace Infrastructure.DbConfig
         public void Configure(EntityTypeBuilder<Company> builder)
         {
             builder.HasKey(c => c.Id);
+
+            // Configuração das propriedades
             builder.Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+
             builder.Property(c => c.CNPJ)
                 .HasMaxLength(14);
-            builder.HasMany(c => c.Employees).WithOne(e => e.Company);
-            builder.HasMany(c => c.PaymentForms).WithOne(pf => pf.Company);
-            builder.HasMany(c => c.Expenses).WithOne(e => e.Company);
-            builder.HasMany(c => c.Orders).WithOne(o => o.Company);
-            builder.HasMany(c => c.Comissions).WithOne(c => c.Company);
 
-            builder.HasOne<ApplicationUser>() // Não mapeamos a propriedade User
-           .WithMany() // Não há coleção em ApplicationUser
-           .HasForeignKey(e => e.UserId) // Usa UserID como chave estrangeira
-           .IsRequired(true); // Define se o relacionamento é opcional
+            // Relacionamentos com outras entidades
+            builder.HasMany(c => c.Employees)
+                .WithOne(e => e.Company)
+                .HasForeignKey(e => e.CompanyId) // Especifica a chave estrangeira em Employee
+                .OnDelete(DeleteBehavior.Cascade); // Caso a Company seja excluída, os Employees também serão excluídos
 
+            builder.HasMany(c => c.PaymentForms)
+                .WithOne(pf => pf.Company)
+                .HasForeignKey(pf => pf.CompanyId) // Chave estrangeira em PaymentForm
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(c => c.Expenses)
+                .WithOne(e => e.Company)
+                .HasForeignKey(e => e.CompanyId) // Chave estrangeira em Expense
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(c => c.Orders)
+                .WithOne(o => o.Company)
+                .HasForeignKey(o => o.CompanyId) // Chave estrangeira em Order
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(c => c.Comissions)
+                .WithOne(c => c.Company)
+                .HasForeignKey(c => c.CompanyId) // Chave estrangeira em Comission
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(c => c.branches)
+                .WithOne(b => b.company) // A chave estrangeira será configurada automaticamente
+                .HasForeignKey(b => b.companyId) // Chave estrangeira em Branch
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Relacionamento 1:1 com ApplicationUser
+            builder.HasOne(c => c.User) // Relacionamento com ApplicationUser
+                .WithMany() // Não há coleção de Companies no ApplicationUser
+                .HasForeignKey(c => c.UserId) // A chave estrangeira em Company para ApplicationUser
+                .IsRequired(true); // Define que o relacionamento é obrigatório para Company
         }
+
+
 
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
             builder.HasKey(e => e.Id);
+
+            // Configuração de propriedades
             builder.Property(e => e.Name)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(100);
+
             builder.Property(e => e.CPF)
-                .HasMaxLength(11);
+                .HasMaxLength(11)
+                .IsRequired(false);
             builder.Property(e => e.UrlPerfil)
                 .HasMaxLength(255);
+
             builder.Property(e => e.IsActive)
                 .IsRequired();
-            builder.HasMany(e => e.Expenses).WithOne(exp => exp.Employee);
-            builder.HasMany(e => e.Orders).WithOne(o => o.Employee);
-            builder.HasMany(e => e.Comissions).WithOne(c => c.Employee);
-            builder.HasOne<ApplicationUser>() // Não mapeamos a propriedade User
-          .WithMany() // Não há coleção em ApplicationUser
-          .HasForeignKey(e => e.UserId) // Usa UserID como chave estrangeira
-          .IsRequired(true); // Define se o relacionamento é opcional
+
+            builder.Property(e => e.RegistrationFinish)
+                .IsRequired();
+
+            builder.Property(e => e.CreatedDate)
+                .IsRequired();
+
+             
+
+            // Relacionamentos com outras entidades
+            builder.HasMany(e => e.Expenses)
+                .WithOne(exp => exp.Employee)
+                .HasForeignKey(exp => exp.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade); // Caso o Employee seja excluído, os Expenses também serão excluídos
+
+            builder.HasMany(e => e.Orders)
+                .WithOne(o => o.Employee)
+                .HasForeignKey(o => o.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade); // Caso o Employee seja excluído, os Orders também serão excluídos
+
+            builder.HasMany(e => e.Comissions)
+                .WithOne(c => c.Employee)
+                .HasForeignKey(c => c.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade); // Caso o Employee seja excluído, as Commissions também serão excluídas
+
+            // Relacionamento 1:1 com ApplicationUser (UserId)
+            builder.HasOne(e => e.User) // Relacionamento com ApplicationUser
+                .WithMany() // Não há coleção de Employees no ApplicationUser
+                .HasForeignKey(e => e.UserId) // A chave estrangeira em Employee
+                .IsRequired(true); // O User é obrigatório para o Employee
+
+            // Relacionamento 1:N com Company
+            builder.HasOne(e => e.Company) // Relacionamento com Company
+                .WithMany(c => c.Employees) // A Company tem muitos Employees
+                .HasForeignKey(e => e.CompanyId) // Chave estrangeira em Employee para Company
+                .IsRequired(true); // O Company é obrigatório para o Employee
         }
+
+        public void Configure(EntityTypeBuilder<Branch> builder)
+        {
+            builder.HasKey(b => b.Id);
+            builder.Property(b => b.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+            builder.Property(b => b.IsActive)
+                .IsRequired();
+            builder.Property(b => b.CreateDate)
+                .IsRequired();
+            builder.Property(b => b.FinishDate)
+                .IsRequired(false); // Opcional
+
+            builder.HasOne(b => b.company)
+                .WithMany(c => c.branches)
+                .HasForeignKey(b => b.companyId)
+                .IsRequired(); //  obrigatório
+        }
+
 
         public void Configure(EntityTypeBuilder<Expense> builder)
         {
