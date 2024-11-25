@@ -62,7 +62,7 @@ namespace WebApi.Controllers.Application
             }
             return BadRequest(response);
         }
-        [MustHavePermission(AppFeature.Companies, AppAction.Read)]
+        [MustHavePermission(AppFeature.Employees, AppAction.Read)]
         [HttpGet("employee/{id}")]
         public async Task<IActionResult> GetCompanyByEmployeeId([FromRoute] string id)
         {

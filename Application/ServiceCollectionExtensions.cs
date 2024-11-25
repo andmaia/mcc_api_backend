@@ -1,9 +1,11 @@
 ﻿using Application.Validators.Domain.Company;
 using Application.Validators.Employee;
 using Application.Validators.Identity;
+using Application.Validators.PaymentForm;
 using Common.requests.company;
 using Common.requests.Employee;
 using Common.requests.identity;
+using Common.requests.PaymentForm;
 using Common.Responses.identity;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +41,9 @@ namespace Application
               .AddTransient<IValidator<UpdateEmployee>, UpdateEmployeeValidator>()
               .AddTransient<IValidator<UpdateEmployeeToCompany>, UpdateEmployeeToCompanyValidator>()
               .AddTransient<IValidator<EmployeeRegisterRequest>, EmployeeRegisterRequestValidator>()
-              .AddTransient<IValidator<FinishRegisterEmployee>, FinishRegisterEmployeeValidator>();
+              .AddTransient<IValidator<FinishRegisterEmployee>, FinishRegisterEmployeeValidator>()
+            .AddTransient<IValidator<CreatePaymentFormRequest>, CreatePaymentFormValidator>()
+            .AddTransient<IValidator<UpdatePaymentFormRequest>, UpdatePaymentFormValidator>();
         }
     }
 

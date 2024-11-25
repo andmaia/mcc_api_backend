@@ -123,7 +123,6 @@ namespace WebApi.Controllers.Identity
             }
             return BadRequest(response);
         }
-
         [MustHavePermission(AppFeature.Users, AppAction.Read)]
         [HttpGet("User/{email}")]
         public async Task<IActionResult> GetUserByEmail([FromRoute] string email)

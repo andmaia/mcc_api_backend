@@ -2,9 +2,11 @@
 using Common.requests.company;
 using Common.requests.Employee;
 using Common.requests.identity;
+using Common.requests.PaymentForm;
 using Common.Responses.Company;
 using Common.Responses.Employee;
 using Common.Responses.identity;
+using Common.Responses.PaymentForm;
 using Domain.models;
 using Domain.Models;
 using System;
@@ -30,8 +32,9 @@ namespace Infrastructure
             CreateMap<EmployeeRegisterRequest, Employee>();
             CreateMap<FinishRegisterEmployee, Employee>();
             CreateMap<Employee, EmployeeResponse>();
-
-
+            CreateMap<PaymentForm, PaymentFormResponse>();
+            CreateMap<UpdatePaymentFormRequest, PaymentForm>();
+            CreateMap<CreatePaymentFormRequest, PaymentForm>();
 
         }
     }

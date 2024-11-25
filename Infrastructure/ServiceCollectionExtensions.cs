@@ -1,10 +1,12 @@
 ﻿using Application.services.Company;
 using Application.services.Employee;
 using Application.services.identity;
+using Application.services.PaymentForm;
 using Infrastructure.Context;
 using Infrastructure.services.company;
 using Infrastructure.services.employee;
 using Infrastructure.services.identity;
+using Infrastructure.services.paymentForm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +44,7 @@ namespace Infrastructure
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<ICompanyService,CompanyService>()
                 .AddTransient<IEmployeService,EmployeeService>()
+                .AddTransient<IPaymentFormService,PaymentFormService>()
                 .AddAutoMapper(assembly);
 
             return services;
