@@ -32,7 +32,8 @@ namespace Test.Configuration
                     options.UseInMemoryDatabase("TestDatabase"));
 
                 // Define o ambiente para "Testing"
-                builder.UseEnvironment("Testing");
+                Environment.SetEnvironmentVariable("ENVIRONMENT", "TEST");
+
             });
         }
     }

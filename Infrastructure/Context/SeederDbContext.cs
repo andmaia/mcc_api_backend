@@ -27,11 +27,12 @@ namespace Infrastructure.Context
 
         public async Task SeedDatabaseAsync()
         {
-            
+            var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
 
-         
-            
-                await CheckAndApplyPendingMigrationAsync();
+            if (environment == "TEST")
+                return;
+
+            await CheckAndApplyPendingMigrationAsync();
                 await SeedRolesAsync();
                 await SeedBasicUserAsync();
                 await SeedAdminUserAsync();

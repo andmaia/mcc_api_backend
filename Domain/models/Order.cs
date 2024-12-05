@@ -22,7 +22,8 @@ namespace Domain.models
         public decimal TotalDiscount { get; set; }
         public Company Company { get; set; }
         public string CompanyId { get; set; }
-
+        public string branchId { get; set; }
+        public Branch Branch { get; set; }
         public Employee Employee { get; set; }
         public string EmployeeId { get; set; }
         public Comission Comission { get; set; }

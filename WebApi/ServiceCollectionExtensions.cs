@@ -22,13 +22,19 @@ namespace WebApi
         internal static IApplicationBuilder SeedDatabase(this IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
+            var env = serviceScope.ServiceProvider.GetRequiredService<IHostEnvironment>();
 
-            var seeders = serviceScope.ServiceProvider.GetServices<SeederDbContext>();
-
-            foreach (var seeder in seeders)
+            // Apenas executa o seed se não estiver no ambiente de teste
+            if (!env.IsEnvironment("Testing"))
             {
-                seeder.SeedDatabaseAsync().GetAwaiter().GetResult();
+                var seeders = serviceScope.ServiceProvider.GetServices<SeederDbContext>();
+
+                foreach (var seeder in seeders)
+                {
+                    seeder.SeedDatabaseAsync().GetAwaiter().GetResult();
+                }
             }
+          
             return app;
         }
 
