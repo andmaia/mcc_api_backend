@@ -14,9 +14,8 @@ namespace Common.requests.Order
         public decimal TotalValue { get; set; }
         public decimal CommissionPercentage { get; set; }
         public string CompanyId { get; set; }
-        public string filial {  get; set; }
+        public string branchId {  get; set; }
 
         public string EmployeeId { get; set; }
-        public string ComissionId { get; set; }
     }
 }

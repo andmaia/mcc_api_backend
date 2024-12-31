@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
+using Common.requests.branch;
 using Common.requests.company;
 using Common.requests.Employee;
 using Common.requests.identity;
+using Common.requests.Order;
 using Common.requests.PaymentForm;
+using Common.Responses.branch;
 using Common.Responses.Company;
 using Common.Responses.Employee;
 using Common.Responses.identity;
+using Common.Responses.order;
 using Common.Responses.PaymentForm;
 using Domain.models;
 using Domain.Models;
@@ -35,6 +39,17 @@ namespace Infrastructure
             CreateMap<PaymentForm, PaymentFormResponse>();
             CreateMap<UpdatePaymentFormRequest, PaymentForm>();
             CreateMap<CreatePaymentFormRequest, PaymentForm>();
+            CreateMap<Order, ResponseOrder>();
+            CreateMap<CreateOrderRequest, Order>();
+            CreateMap<UpdateOrderRequest, Order>();
+            CreateMap<UpdateBranchRequest, Branch>();
+            CreateMap<CreateBranchRequest, Branch>();
+            CreateMap<Branch, ResponseBranch>();
+
+
+
+
+
 
         }
     }

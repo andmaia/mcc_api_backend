@@ -1,9 +1,11 @@
-﻿using Application.services.Company;
+﻿using Application.services.Branch;
+using Application.services.Company;
 using Application.services.Employee;
 using Application.services.identity;
 using Application.services.Order;
 using Application.services.PaymentForm;
 using Infrastructure.Context;
+using Infrastructure.services.branch;
 using Infrastructure.services.company;
 using Infrastructure.services.employee;
 using Infrastructure.services.identity;
@@ -48,6 +50,8 @@ namespace Infrastructure
                 .AddTransient<IEmployeService,EmployeeService>()
                 .AddTransient<IPaymentFormService,PaymentFormService>()
                 .AddTransient<IOrderService, OrderService>()
+                .AddTransient<IBranchService, BranchService>()
+
                 .AddAutoMapper(assembly);
 
             return services;

@@ -191,8 +191,12 @@ namespace Infrastructure.DbConfig
                 .IsRequired();
             builder.Property(o => o.CreationDate)
                 .IsRequired();
-            builder.Property(o => o.UpdatedDate);
-            builder.Property(o => o.CompletionDate);
+            builder.Property(o => o.UpdatedDate)
+                            .IsRequired(false);
+
+            builder.Property(o => o.CompletionDate)
+                                            .IsRequired(false);
+
             builder.Property(o => o.PaymentOrderStatus)
                 .IsRequired();
             builder.Property(o => o.CommissionOrderStatus)
@@ -203,6 +207,9 @@ namespace Infrastructure.DbConfig
                 .IsRequired();
             builder.Property(o => o.TotalDiscount)
                 .IsRequired();
+            builder.Property(o => o.ComissionId)
+               .IsRequired(false);
+
         }
 
         public void Configure(EntityTypeBuilder<Payment> builder)
@@ -254,6 +261,8 @@ namespace Infrastructure.DbConfig
                 .IsRequired();
             builder.Property(c => c.Url)
                 .HasMaxLength(255);
+
+
         }
     }
 }

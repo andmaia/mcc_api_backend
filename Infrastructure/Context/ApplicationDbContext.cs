@@ -35,5 +35,6 @@ namespace Infrastructure.Context
         public DbSet<PaymentForm> PaymentForms { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Expense> Expenses { get; set; }
+        public DbSet<Branch> Branchs { get; set; }
     }
 }
