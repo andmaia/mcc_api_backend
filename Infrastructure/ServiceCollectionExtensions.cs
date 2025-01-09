@@ -3,6 +3,7 @@ using Application.services.Company;
 using Application.services.Employee;
 using Application.services.identity;
 using Application.services.Order;
+using Application.services.Payment;
 using Application.services.PaymentForm;
 using Infrastructure.Context;
 using Infrastructure.services.branch;
@@ -10,6 +11,7 @@ using Infrastructure.services.company;
 using Infrastructure.services.employee;
 using Infrastructure.services.identity;
 using Infrastructure.services.order;
+using Infrastructure.services.paymenet;
 using Infrastructure.services.paymentForm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -51,6 +53,8 @@ namespace Infrastructure
                 .AddTransient<IPaymentFormService,PaymentFormService>()
                 .AddTransient<IOrderService, OrderService>()
                 .AddTransient<IBranchService, BranchService>()
+                .AddTransient<IPaymentService, PaymentService>()
+
 
                 .AddAutoMapper(assembly);
 

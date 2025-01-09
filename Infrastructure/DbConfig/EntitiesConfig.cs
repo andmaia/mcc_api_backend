@@ -215,21 +215,36 @@ namespace Infrastructure.DbConfig
         public void Configure(EntityTypeBuilder<Payment> builder)
         {
             builder.HasKey(p => p.Id);
+
             builder.Property(p => p.CreationDate)
                 .IsRequired();
+
             builder.Property(p => p.PaymentDate);
             builder.Property(p => p.UpdatedDate);
             builder.Property(p => p.CompletionDate);
+
             builder.Property(p => p.IsActive)
                 .IsRequired();
+
             builder.Property(p => p.Tax)
                 .IsRequired();
+
             builder.Property(p => p.Url)
-                .HasMaxLength(255);
-            builder.Property(p => p.Discount);
+                .HasMaxLength(255)
+                .IsRequired(false);
+
+            builder.Property(p => p.Discount)
+                .HasColumnType("decimal(18,2)"); 
+
             builder.Property(p => p.Amount)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(p => p.Value)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
         }
+
 
         public void Configure(EntityTypeBuilder<Comission> builder)
         {

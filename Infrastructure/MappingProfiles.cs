@@ -4,12 +4,14 @@ using Common.requests.company;
 using Common.requests.Employee;
 using Common.requests.identity;
 using Common.requests.Order;
+using Common.requests.Payment;
 using Common.requests.PaymentForm;
 using Common.Responses.branch;
 using Common.Responses.Company;
 using Common.Responses.Employee;
 using Common.Responses.identity;
 using Common.Responses.order;
+using Common.Responses.Paymenet;
 using Common.Responses.PaymentForm;
 using Domain.models;
 using Domain.Models;
@@ -21,12 +23,12 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public class MappingProfiles:Profile
+    public class MappingProfiles: Profile
     {
-        public MappingProfiles() 
+        public MappingProfiles()
         {
             CreateMap<UserRegistrationRequest, ApplicationUser>();
-            CreateMap<ApplicationUser,UserResponse>();
+            CreateMap<ApplicationUser, UserResponse>();
             CreateMap<UserPreRegistrationRequest, ApplicationUser>();
             CreateMap<CompanyRequest, Company>();
             CreateMap<Company, CompanyResponse>();
@@ -45,6 +47,12 @@ namespace Infrastructure
             CreateMap<UpdateBranchRequest, Branch>();
             CreateMap<CreateBranchRequest, Branch>();
             CreateMap<Branch, ResponseBranch>();
+
+            CreateMap<CreatePaymentRequest, Payment>();
+            CreateMap<Payment, ResponsePayment>();
+
+
+
 
 
 

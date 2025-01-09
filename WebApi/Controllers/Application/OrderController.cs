@@ -42,7 +42,7 @@ namespace WebApi.Controllers.Application
 
 
         [MustHavePermission(AppFeature.PaymentMethods, AppAction.Update)]
-        [HttpPut("/{OrderId}/pay")]
+        [HttpPut("{OrderId}/pay")]
         public async Task<IActionResult> PayOrder([FromRoute] string OrderId)
         {
             var response = await MediatorSender.Send(new PayOrderAsyncCommand { Id = OrderId });
@@ -57,7 +57,7 @@ namespace WebApi.Controllers.Application
 
 
         [MustHavePermission(AppFeature.PaymentMethods, AppAction.Update)]
-        [HttpPut("/{OrderId}/unpay")]
+        [HttpPut("{OrderId}/unpay")]
         public async Task<IActionResult> UnPayOrder([FromRoute] string OrderId)
         {
             var response = await MediatorSender.Send(new UnpayOrderAsyncCommand { Id = OrderId });
@@ -70,7 +70,7 @@ namespace WebApi.Controllers.Application
 
 
         [MustHavePermission(AppFeature.PaymentMethods, AppAction.Update)]
-        [HttpPut("/{OrderId}/disable")]
+        [HttpPut("{OrderId}/disable")]
         public async Task<IActionResult> DisableOrder([FromRoute] string OrderId)
         {
             var response = await MediatorSender.Send(new DisableOrderCommand { Id = OrderId });
@@ -83,7 +83,7 @@ namespace WebApi.Controllers.Application
 
 
         [MustHavePermission(AppFeature.PaymentMethods, AppAction.Update)]
-        [HttpGet("/{OrderId}")]
+        [HttpGet("{OrderId}")]
         public async Task<IActionResult> GetOrderById([FromRoute] string OrderId)
         {
             var response = await MediatorSender.Send(new GetOrderByIdQuery { Id = OrderId });

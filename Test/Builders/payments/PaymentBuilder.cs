@@ -20,7 +20,7 @@ namespace Test.Builders.payments
                 PaymentDate = DateTime.MinValue,
                 UpdatedDate = DateTime.MinValue,
                 CompletionDate = DateTime.MinValue,
-                IsActive = false,
+                IsActive = true,
                 PaymentFormId = Guid.NewGuid().ToString(),
                 PaymentForm = null,
                 Order = null,

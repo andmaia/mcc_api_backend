@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.models
+namespace Common.Responses.Paymenet
 {
-    public class Payment
+    public class ResponsePayment
     {
         public string Id { get; set; }
         public DateTime CreationDate { get; set; }
@@ -15,14 +15,11 @@ namespace Domain.models
         public DateTime? CompletionDate { get; set; }
         public bool IsActive { get; set; }
         public string PaymentFormId { get; set; }
-        public PaymentForm PaymentForm { get; set; }
-        public Order Order { get; set; }
         public string OrderId { get; set; }
         public decimal Value { get; set; }
         public decimal Tax { get; set; }
         public string Url { get; set; }
         public decimal Discount { get; set; }
         public decimal Amount { get; set; }
- 
     }
 }

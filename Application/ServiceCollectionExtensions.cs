@@ -2,11 +2,13 @@
 using Application.Validators.Employee;
 using Application.Validators.Identity;
 using Application.Validators.Orders;
+using Application.Validators.Payment;
 using Application.Validators.PaymentForm;
 using Common.requests.company;
 using Common.requests.Employee;
 using Common.requests.identity;
 using Common.requests.Order;
+using Common.requests.Payment;
 using Common.requests.PaymentForm;
 using Common.Responses.identity;
 using FluentValidation;
@@ -48,7 +50,10 @@ namespace Application
             .AddTransient<IValidator<UpdatePaymentFormRequest>, UpdatePaymentFormValidator>()
             .AddTransient<IValidator<OrderSearchFilter>, OrderSearchFilterValidator>()
                         .AddTransient<IValidator<UpdateOrderRequest>, UpdateOrderRequestValidator>()
-                                    .AddTransient<IValidator<CreateOrderRequest>, CreateOrderRequestValidator>();
+                                    .AddTransient<IValidator<CreateOrderRequest>, CreateOrderRequestValidator>()
+              .AddTransient<IValidator<CreatePaymentRequest>, CreatePaymentRequestValidator>()
+                          .AddTransient<IValidator<UpdatePaymentRequest>, UpdatePaymentRequestValidator>();
+
 
 
 

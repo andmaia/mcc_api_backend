@@ -28,6 +28,6 @@ namespace Domain.models
         public string EmployeeId { get; set; }
         public Comission Comission { get; set; }
         public string? ComissionId { get; set; }
-        public  IEnumerable<Payment> Payments { get; set; } = new List<Payment>();
+        public ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }

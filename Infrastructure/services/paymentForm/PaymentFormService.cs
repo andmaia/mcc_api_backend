@@ -131,7 +131,6 @@ namespace Infrastructure.services.paymentForm
 
             var response = _mapper.Map<List<PaymentFormResponse>>(paymentForms);
             return ResponseWrapper<List<PaymentFormResponse>>.Success(response);
-
         }
 
 

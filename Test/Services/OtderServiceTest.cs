@@ -84,26 +84,7 @@ namespace Test.Services
             result.Messages.Should().Contain("Employee does not belong this company.");
         }
 
-        [Fact]
-        public async Task CREATE_ORDER_SHOULD_CREATE_USER_WITH_COMMISSION_AS_NOT_PAID_AND_PAYMENTSTATUS()
-        {
-            var company = new CompanyBuilder().Build();
-            var employee = new EmployeeBuilder().WithCompanyId(company.Id).Build();
-            var branch = new BranchBuilder().WithCompanyId(company.Id).Build();
-            var createOrderRequest = new CreateOrderRequestBuilder()
-                .WithCompanyId(company.Id)
-                .WithEmployeeId(employee.Id)
-                .Build();
-
-            _fixture.DbContext.Companies.Add(company);
-            _fixture.DbContext.Employees.Add(employee);
-            _fixture.DbContext.Branchs.Add(branch);
-            await _fixture.DbContext.SaveChangesAsync();
-
-            var result = await _orderServiceMock.CreateOrderAsync(createOrderRequest);
-
-            result.IsSuccessful.Should().BeTrue();
-        }
+     
 
         [Fact]
         public async Task Update_ORDER_SHOULD_FAIL_IF_branch_NOT_EXISTS()

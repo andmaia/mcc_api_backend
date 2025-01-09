@@ -125,11 +125,7 @@ namespace Test.Builders.branchs
             return this;
         }
 
-        public OrderBuilder WithPayments(IEnumerable<Payment> payments)
-        {
-            _order.Payments = payments;
-            return this;
-        }
+        
 
         public Order Build()
         {
