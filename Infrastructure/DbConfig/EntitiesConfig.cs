@@ -151,6 +151,8 @@ namespace Infrastructure.DbConfig
             builder.HasKey(exp => exp.Id);
             builder.Property(exp => exp.Value)
                 .IsRequired();
+            builder.Property(exp => exp.ComissionId)
+          .IsRequired(false);
             builder.Property(exp => exp.CreationDate)
                 .IsRequired();
             builder.Property(exp => exp.UpdatedDate);
@@ -158,7 +160,9 @@ namespace Infrastructure.DbConfig
             builder.Property(exp => exp.Description)
                 .HasMaxLength(255);
             builder.Property(exp => exp.Url)
-                .HasMaxLength(255);
+                .HasMaxLength(255)
+                .IsRequired(false);
+           
             builder.Property(exp => exp.StatusPayment)
                 .IsRequired();
             builder.Property(exp => exp.IsActive)

@@ -124,6 +124,7 @@ namespace Infrastructure.services.paymenet
             {
                 return ResponseWrapper.Fail("Order does not exist.");
             }
+            order.Payments = order.Payments.Where(p => p.IsActive == true).ToList();
             var paymentResponses = _mapper.Map<List<ResponsePayment>>(order.Payments);
 
             return await ResponseWrapper<List<ResponsePayment>>.SuccessAsync(paymentResponses);

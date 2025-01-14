@@ -1,10 +1,12 @@
 ﻿using Application.services.Branch;
 using Application.services.Company;
 using Application.services.Employee;
+using Application.services.Expense;
 using Application.services.identity;
 using Application.services.Order;
 using Application.services.Payment;
 using Application.services.PaymentForm;
+using Application.services.Expense;
 using Infrastructure.Context;
 using Infrastructure.services.branch;
 using Infrastructure.services.company;
@@ -24,6 +26,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.services.ezpense;
 
 namespace Infrastructure
 {
@@ -54,6 +57,7 @@ namespace Infrastructure
                 .AddTransient<IOrderService, OrderService>()
                 .AddTransient<IBranchService, BranchService>()
                 .AddTransient<IPaymentService, PaymentService>()
+                .AddTransient<IExpenseService, ExprenseService>()
 
 
                 .AddAutoMapper(assembly);

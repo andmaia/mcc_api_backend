@@ -9,6 +9,7 @@ using Common.requests.PaymentForm;
 using Common.Responses.branch;
 using Common.Responses.Company;
 using Common.Responses.Employee;
+using Common.Responses.Expense;
 using Common.Responses.identity;
 using Common.Responses.order;
 using Common.Responses.Paymenet;
@@ -50,6 +51,8 @@ namespace Infrastructure
 
             CreateMap<CreatePaymentRequest, Payment>();
             CreateMap<Payment, ResponsePayment>();
+                CreateMap<Expense, ExpenseResponse>();
+
 
 
 
