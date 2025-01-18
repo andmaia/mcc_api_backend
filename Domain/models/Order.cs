@@ -27,7 +27,7 @@ namespace Domain.models
         public Employee Employee { get; set; }
         public string EmployeeId { get; set; }
         public Comission Comission { get; set; }
-        public string? ComissionId { get; set; }
+        public string ComissionId { get; set; }
         public ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }

@@ -7,6 +7,7 @@ using Common.requests.Order;
 using Common.requests.Payment;
 using Common.requests.PaymentForm;
 using Common.Responses.branch;
+using Common.Responses.Comission;
 using Common.Responses.Company;
 using Common.Responses.Employee;
 using Common.Responses.Expense;
@@ -48,20 +49,25 @@ namespace Infrastructure
             CreateMap<UpdateBranchRequest, Branch>();
             CreateMap<CreateBranchRequest, Branch>();
             CreateMap<Branch, ResponseBranch>();
-
             CreateMap<CreatePaymentRequest, Payment>();
             CreateMap<Payment, ResponsePayment>();
-                CreateMap<Expense, ExpenseResponse>();
+            CreateMap<Expense, ExpenseResponse>();
+            CreateMap<Comission, ResponseComiision>();
 
+            CreateMap<Comission, ResponseComissionWithAllDetails>()
+            .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.Employee.Name))
+            .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
+            .ForMember(dest => dest.Expenses, opt => opt.MapFrom(src => src.Expenses));
 
+            CreateMap<Order, ResponseOrderToComission>()
+                .ForMember(dest => dest.Payments, opt => opt.MapFrom(src => src.Payments));
 
+            CreateMap<Payment, ResponsePaymentToComission>()
+                .ForMember(dest => dest.PaymentFormName, opt => opt.MapFrom(src => src.PaymentForm.Name));
 
-
-
-
-
-
-
+            CreateMap<Expense, ExpenseResponseToComission>()
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.StatusPayment, opt => opt.MapFrom(src => src.StatusPayment));
         }
     }
 }

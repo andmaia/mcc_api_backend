@@ -33,9 +33,9 @@ namespace Test.Builders.EmployeeTest
                 IsActive = _isActive,
                 CompanyId = _companyId,
                 UserId = _userId,
-                Expenses = new List<Expense>(),
+                Expenses = new List<Domain.models.Expense>(),
                 Orders = new List<Order>(),
-                Comissions = new List<Comission>()
+                Comissions = new List<Domain.models.Comission>()
             };
         }
 
@@ -93,7 +93,7 @@ namespace Test.Builders.EmployeeTest
             return this;
         }
 
-        public EmployeeBuilder WithExpenses(IEnumerable<Expense> expenses)
+        public EmployeeBuilder WithExpenses(IEnumerable<Domain.models.Expense> expenses)
         {
             return this;
         }
@@ -103,7 +103,7 @@ namespace Test.Builders.EmployeeTest
             return this;
         }
 
-        public EmployeeBuilder WithComissions(IEnumerable<Comission> comissions)
+        public EmployeeBuilder WithComissions(IEnumerable<Domain.models.Comission> comissions)
         {
             return this;
         }

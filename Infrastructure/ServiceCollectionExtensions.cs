@@ -27,6 +27,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.services.ezpense;
+using Application.services.Comission;
+using Infrastructure.services.Comission;
 
 namespace Infrastructure
 {
@@ -58,6 +60,8 @@ namespace Infrastructure
                 .AddTransient<IBranchService, BranchService>()
                 .AddTransient<IPaymentService, PaymentService>()
                 .AddTransient<IExpenseService, ExprenseService>()
+                 .AddTransient<IComissionService, ComissionService>()
+
 
 
                 .AddAutoMapper(assembly);

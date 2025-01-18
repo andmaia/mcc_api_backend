@@ -39,7 +39,7 @@ namespace Test.Services
             _mapperMock = new Mapper(mappingConfig);
             _fixture = fixture;
             _orderServiceMock = new OrderService(_fixture.DbContext, _mapperMock);
-        }
+        } 
 
         [Fact]
         public async Task Should_Add_And_Retrieve_Order_Directly_From_DbContext()
