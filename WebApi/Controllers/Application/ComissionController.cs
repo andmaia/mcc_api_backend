@@ -36,6 +36,79 @@ namespace WebApi.Controllers.Application
             }
             return BadRequest(response);
         }
+
+        [MustHavePermission(AppFeature.Commissions, AppAction.Read)]
+        [HttpPost("{Take}/{Page}/user")]
+        public async Task<IActionResult> GetComissionByUserId([FromBody] ComissionFilterRequest request, int Take, int Page)
+        {
+            var response = await MediatorSender.Send(new GetComissionByUserQuery { ComissionFilterRequest = request, page = Page, take = Take });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+
+        [MustHavePermission(AppFeature.Commissions, AppAction.Read)]
+        [HttpPost("{Take}/{Page}/company")]
+        public async Task<IActionResult> GetComissionByCompanyId([FromBody] ComissionFilterRequest request, int Take, int Page)
+        {
+            var response = await MediatorSender.Send(new GetComissionByCompanyQuery { ComissionFilterRequest = request, page = Page, take = Take });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [MustHavePermission(AppFeature.Commissions, AppAction.Read)]
+        [HttpPost("{Take}/{Page}/employee")]
+        public async Task<IActionResult> GetComissionByEmployeeId([FromBody] ComissionFilterRequest request, int Take, int Page)
+        {
+            var response = await MediatorSender.Send(new GetComissionByEmployeeQuery { ComissionFilterRequest = request, page = Page, take = Take });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [MustHavePermission(AppFeature.Commissions, AppAction.Delete)]
+        [HttpDelete("{Id}/disable")]
+        public async Task<IActionResult> DisableComissionById([FromRoute] string Id)
+        {
+            var response = await MediatorSender.Send(new DeleteComissionCommand { Id = Id });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [MustHavePermission(AppFeature.Commissions, AppAction.Update)]
+        [HttpPut("{Id}/pay")]
+        public async Task<IActionResult> PayComissionById([FromRoute] string Id)
+        {
+            var response = await MediatorSender.Send(new PayComissionCommand { Id = Id });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [MustHavePermission(AppFeature.Commissions, AppAction.Update)]
+        [HttpPut("{Id}/unpay")]
+        public async Task<IActionResult> unPayComissionById([FromRoute] string Id)
+        {
+            var response = await MediatorSender.Send(new UnPayComissionCommand { Id = Id });
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
     }
 
 }

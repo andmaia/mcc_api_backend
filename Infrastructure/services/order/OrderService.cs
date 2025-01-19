@@ -153,7 +153,7 @@ namespace Infrastructure.services.order
 
 
             var payments = await _context.Payments.Where(p => p.OrderId == id).AsNoTracking().ToListAsync();
-            var totalPayments = payments.Sum(p => p.Amount);
+            var totalPayments = payments.Sum(p => p.Value);
 
             if (totalPayments != order.TotalValue)
             {

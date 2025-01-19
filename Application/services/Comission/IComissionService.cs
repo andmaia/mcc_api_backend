@@ -15,5 +15,14 @@ namespace Application.services.Comission
     {
         Task<IResponseWrapper<ResponseComissionWithAllDetails>> CreateComissionAsync(CreateComissionRequest request);
         Task<IResponseWrapper<ResponseComissionWithAllDetails>> GetComissionById(string id);
+        Task<IResponseWrapper> DeleteComission(string id);
+        Task<IResponseWrapper> PayComission(string id);
+        Task<IResponseWrapper> UnpayComission(string id);
+
+        Task<IResponseWrapper<IList<ResponseComissionWithAllDetails>>> GetComissionByEmployee(ComissionFilterRequest request,int take,int page);
+        Task<IResponseWrapper<IList<ResponseComissionWithAllDetails>>> GetComissionByCompany(ComissionFilterRequest request ,int take ,int page);
+
+        Task<IResponseWrapper<IList<ResponseComissionWithAllDetails>>> GetComissionByUser(ComissionFilterRequest request, int take, int page);
+
     }
 }
